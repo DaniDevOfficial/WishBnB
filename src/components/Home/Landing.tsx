@@ -17,8 +17,7 @@ import { MdBolt } from 'react-icons/md';
 
 const HeroSection = () => {
   return (
-    <Container maxW="6xl" px={{ base: 6, md: 3 }} py={24}>
-      <Stack direction={{ base: 'column', md: 'row' }} justifyContent="center">
+      <Stack direction={{ base: 'column', md: 'row' }} justifyContent="center" my={10}>
         <Stack direction="column" spacing={6} justifyContent="center" maxW="480px">
           <HStack
             as={Link}
@@ -109,7 +108,6 @@ const HeroSection = () => {
           />
         </Box>
       </Stack>
-    </Container>
   );
 };
 

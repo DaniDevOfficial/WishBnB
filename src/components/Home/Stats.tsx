@@ -35,8 +35,7 @@ const planList = [
 
 export const Stats = () => {
   return (
-    <Container maxW="5xl" p={{ base: 4, sm: 10 }}>
-      <Stack direction={{ base: 'column', md: 'row' }} justifyContent="space-between">
+      <Stack direction={{ base: 'column', md: 'row' }} justifyContent="space-between" my={10}>
         <Stack spacing={4}>
           <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold">
             Our ultimate goal
@@ -79,7 +78,6 @@ export const Stats = () => {
           </SimpleGrid>
         </Stack>
       </Stack>
-    </Container>
   );
 };
 
