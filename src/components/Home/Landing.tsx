@@ -44,8 +44,8 @@ const HeroSection = () => {
             </HStack>
           </HStack>
           <chakra.h1 fontSize="5xl" lineHeight={1} fontWeight="bold" textAlign="left">
-            Build products faster <br />
-            <chakra.span color="teal">in ChakraUI</chakra.span>
+         Your Basements and Boxes <br />
+            <chakra.span color="teal">With WishBnB</chakra.span>
           </chakra.h1>
           <Text
             fontSize="1.2rem"
@@ -54,8 +54,8 @@ const HeroSection = () => {
             fontWeight="400"
             color="gray.500"
           >
-            TemplatesKart provides the best ChakraUI templates. Focus on your business, not on the
-            boilerplate.
+                At WishBnB, we offer uniquely charming stays in basements and boxes, creating memorable experiences for the bold traveler (or sweatshop owner).
+
           </Text>
           <HStack
             spacing={{ base: 0, sm: 2 }}
@@ -67,7 +67,6 @@ const HeroSection = () => {
               h={12}
               px={6}
               color="white"
-              size="lg"
               rounded="md"
               mb={{ base: 2, sm: 0 }}
               zIndex={5}
@@ -75,11 +74,11 @@ const HeroSection = () => {
               bgGradient="linear(to-l, #0ea5e9,#2563eb)"
               _hover={{ bgGradient: 'linear(to-l, #0ea5e9,#2563eb)', opacity: 0.9 }}
             >
-              <chakra.span> Explore ComponentsKart </chakra.span>
+              <chakra.span> Explore all our Places now </chakra.span>
               <Icon as={MdBolt} h={4} w={4} ml={1} />
             </chakra.button>
             <Box
-              d="flex"
+              display="flex"
               justifyContent="center"
               bg={useColorModeValue('white', 'gray.800')}
               w={{ base: '100%', sm: 'auto' }}
@@ -92,7 +91,7 @@ const HeroSection = () => {
               as={Link}
               zIndex={55555555}
             >
-              Watch Video
+                sum ting
             </Box>
           </HStack>
         </Stack>
