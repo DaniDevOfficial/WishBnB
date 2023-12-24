@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Image, Heading, Text, Skeleton, useColorMode, Button, useColorModeValue } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { Box, Image, Heading, Text, Skeleton, useColorMode, Button } from '@chakra-ui/react';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function SingleLocationContainer({ post }: { post: any }) {
-    const { title, image, description, price } = post;
+    const { title, image, description, price, location } = post;
     const [isLoading, setIsLoading] = useState(true);
     const { colorMode } = useColorMode();
 
@@ -35,12 +36,17 @@ export function SingleLocationContainer({ post }: { post: any }) {
                     objectFit="cover"
                     borderRadius="md"
                     mb="2"
-                    fallback={<Skeleton h="160px"
-                        w="270px" borderRadius="md" />}
+                    fallback={
+                        <Skeleton
+                            h="160px"
+                            w="270px"
+                            borderRadius="md"
+                            mb="2"
+                        />}
                 />
             )}
             <Text fontSize={"xs"} color={colorMode === 'dark' ? "smalltext.base" : "smalltext.base"} mb="1" display={isLoading ? "none" : "block"} >
-                {`Location: ${title}`}
+                {`Location: ${location}`}
             </Text>
             <Heading as="h3" size="md" mb="1" color={colorMode === 'dark' ? "text.darkmode" : "black"} display={isLoading ? "none" : "block"}>
                 {title}

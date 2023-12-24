@@ -1,4 +1,4 @@
-import React from 'react'
+import UserCard from '../components/Home/Creator'
 import Landing from '../components/Home/Landing'
 import { Stats } from '../components/Home/Stats'
 import { TopHits } from '../components/Home/TopHits'
@@ -12,6 +12,7 @@ export function HomePage() {
                 <Landing />
                 <TopHits />
                 <Stats />
+                <UserCard />
             </Container>
         </>
     )

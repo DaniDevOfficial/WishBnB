@@ -6,7 +6,7 @@ export function TopHits() {
     const topHits = [
         {
             title: "The Pillow Fort Haven",
-            image: "https://.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
+            image: "",
             location: "Cozy Corner, location1",
             description: "Escape to the fluffiest haven on earth. Perfect for pillow fights and bedtime stories. A 5-star experience guaranteed!",
             price: "50"
