@@ -1,12 +1,12 @@
 
+import { ChakraProvider } from "@chakra-ui/react";
+import { Routing } from "./pages/Routing";
+import { theme } from './config/chakra';
 
-function App() {
-
+export function App() {
   return (
-    <>
-
-    </>
-  )
+    <ChakraProvider theme={theme}>
+      <Routing />
+    </ChakraProvider>
+  );
 }
-
-export default App
