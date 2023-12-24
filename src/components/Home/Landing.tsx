@@ -11,7 +11,7 @@ import {
   Box,
   Link,
   Icon,
-  useColorMode 
+  useColorMode
 } from '@chakra-ui/react';
 import { GoChevronRight } from 'react-icons/go';
 import { MdBolt } from 'react-icons/md';
@@ -28,15 +28,15 @@ const HeroSection = () => {
           rounded="full"
           fontSize="sm"
           w="max-content"
-          bg={useColorModeValue('gray.300', 'gray.700')}
+          bg={useColorModeValue('gray.200', 'gray.700')}
         >
           <Box
             py={1}
             px={2}
             lineHeight={1}
             rounded="full"
-            color="white"
-            bgGradient="linear(to-l, #0ea5e9,#2563eb)"
+            color="black"
+            bgColor={useColorModeValue('secondary.base', 'secondary.darkmode')}
           >
             What's new
           </Box>
@@ -47,7 +47,7 @@ const HeroSection = () => {
         </HStack>
         <chakra.h1 fontSize="5xl" lineHeight={1} fontWeight="bold" textAlign="left">
           Your Basements and Boxes <br />
-          <chakra.span color={colorMode === 'dark' ? 'teal.300' : 'teal.500'}>
+          <chakra.span color={colorMode === 'dark' ? 'accent.darkmode' : 'accent.base'}>
             With WishBnB
           </chakra.span>
         </chakra.h1>
@@ -56,7 +56,7 @@ const HeroSection = () => {
           textAlign="left"
           lineHeight="1.375"
           fontWeight="400"
-          color="gray.500"
+          color="smalltext.base"
         >
           At WishBnB, we offer uniquely charming stays in basements and boxes, creating memorable experiences for the bold traveler (or sweatshop owner).
 
@@ -70,16 +70,16 @@ const HeroSection = () => {
             w={{ base: '100%', sm: 'auto' }}
             h={12}
             px={6}
-            color="white"
-            rounded="md"
+            color={colorMode === 'dark' ? "text.darkmode" : "text.base"} rounded="md"
             mb={{ base: 2, sm: 0 }}
             zIndex={5}
             lineHeight={1}
-            bgGradient="linear(to-l, #0ea5e9,#2563eb)"
-            _hover={{ bgGradient: 'linear(to-l, #0ea5e9,#2563eb)', opacity: 0.9 }}
+            bgColor={useColorModeValue('primary.base', 'primary.darkmode')}
+            _hover={{ opacity: 0.9, transform: 'scale(1.05)', transition: 'transform 0.3s ease-in-out' }}
+            transition="transform 0.3s ease-in-out"
           >
-            <chakra.span> Explore all our Places now </chakra.span>
-            <Icon as={MdBolt} h={4} w={4} ml={1} />
+            <chakra.span color={"white"}> Explore all our Places now </chakra.span>
+            <Icon color="white"as={MdBolt} h={4} w={4} ml={1} />
           </chakra.button>
           <Box
             display="flex"

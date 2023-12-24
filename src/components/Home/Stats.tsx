@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Text, SimpleGrid, Box, chakra, Stack, HStack, Icon } from '@chakra-ui/react';
+import { Container, Text, SimpleGrid, Box, chakra, Stack, HStack, Icon, useColorModeValue } from '@chakra-ui/react';
 import { AiFillCheckCircle } from 'react-icons/ai';
 
 interface StatData {
@@ -40,18 +40,18 @@ export const Stats = () => {
           <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold">
             Our ultimate goal
           </chakra.h1>
-          <Text fontSize="md" color="gray.400" maxW="480px">
+          <Text fontSize="md"  color={useColorModeValue("smalltext.base", "smalltext.base")} maxW="480px">
             We want to make sure that everyone can find a place to stay during their holydays in, no matter how much money they have.
             WishBnB lets you find the best deals for your stay, and we are always here to help you.
           </Text>
 
           <Stack spacing={2}>
-            <Text fontSize="md" color="gray.400">
+            <Text fontSize="md" color={useColorModeValue("text.base", "text.darkmode")}>
               We plan on doing all that cultivating our values:
             </Text>
             {planList.map((data, index) => (
               <HStack key={index} alignItems="center" spacing={1} fontSize="md">
-                <Icon as={AiFillCheckCircle} w={4} h={4} color="blue.400" />
+                <Icon as={AiFillCheckCircle} w={4} h={4} color={useColorModeValue("secondary.base", "secondary.darkmode")} />
                 <Text fontSize="md">{data}</Text>
               </HStack>
             ))}
@@ -66,10 +66,10 @@ export const Stats = () => {
                 py={1}
                 pr={1}
                 borderLeft="2px solid"
-                borderLeftColor="blue.400"
+                borderLeftColor={useColorModeValue("accent.base", "accent.darkmode")}
                 justifyContent="space-between"
               >
-                <Box fontSize="2xl" fontWeight="bold" color="blue.400">
+                <Box fontSize="2xl" fontWeight="bold" color={useColorModeValue("secondary.base", "secondary.darkmode")}>
                   {data.score}
                 </Box>
                 <Text fontSize="md">{data.label}</Text>

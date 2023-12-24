@@ -38,21 +38,21 @@ export function SingleLocationContainer({ post }: { post: any }) {
                     loading="lazy"
                 />
             )}
-            <Text fontSize={"xs"} color={colorMode === 'dark' ? "gray.400" : "gray.600"} mb="1">
+            <Text fontSize={"xs"} color={colorMode === 'dark' ? "smalltext.base" : "smalltext.base"} mb="1">
                 {`Location: ${title}`}
             </Text>
-            <Heading as="h3" size="md" mb="1" color={colorMode === 'dark' ? "white" : "black"}>
+            <Heading as="h3" size="md" mb="1" color={colorMode === 'dark' ? "text.darkmode" : "black"}>
                 {title}
             </Heading>
-            <Text fontSize="sm" color={colorMode === 'dark' ? "gray.400" : "gray.600"} mb="2" maxW="270px">
+            <Text fontSize="sm" color={colorMode === 'dark' ? "text.darkmode" : "text.base"} mb="2" maxW="270px">
                 {description}
             </Text>
-            <Text fontWeight="bold" fontSize="lg" color={colorMode === 'dark' ? "teal.300" : "teal.500"}>
+            <Text fontWeight="bold" fontSize="lg" color={colorMode === 'dark' ? "secondary.darkmode" : "secondary.base"}>
                 {`Price Per Night: ${price}.00 CHF`}
             </Text>
             <Button
                 mt={4}
-                color={colorMode === 'dark' ? 'teal.300' : 'teal.500'}
+                color={colorMode === 'dark' ? 'primary.darkmode' : 'primary.base'}
                  size="sm"
                 onClick={() => {
                     alert("You have booked this location!");
