@@ -5,6 +5,7 @@ import {
 
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa"
+import { Footer } from "../components/Footer";
  
 
 const router = createHashRouter([
@@ -24,7 +25,7 @@ export function Routing() {
     const { toggleColorMode, colorMode } = useColorMode();
 
     return (
-        <>
+        <>  
             <RouterProvider router={router} />
             <IconButton
                 aria-label="toggle theme"
@@ -36,8 +37,8 @@ export function Routing() {
                 onClick={toggleColorMode}
                 icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
             />
-
-
+    
+            <Footer />
         </>
 
     )
