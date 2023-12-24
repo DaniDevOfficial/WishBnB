@@ -1,15 +1,12 @@
-import React from 'react'
 import { SingleLocationContainer } from '../SingleLocationContainer'
-import { Flex, Wrap, WrapItem } from '@chakra-ui/react'
+import { Flex, WrapItem } from '@chakra-ui/react'
 
 export function TopHits() {
 
-    // create a json with 3 top hits
-    // each has a title, image, location, and description   and price
     const topHits = [
         {
             title: "The Pillow Fort Haven",
-            image: "https://www.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
+            image: "https://.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
             location: "Cozy Corner, location1",
             description: "Escape to the fluffiest haven on earth. Perfect for pillow fights and bedtime stories. A 5-star experience guaranteed!",
             price: "50"
@@ -28,7 +25,10 @@ export function TopHits() {
             description: "Dive into the world's first underwater treehouse. Explore the oceanic wonders and sleep surrounded by fishy neighbors!",
             price: "30"
         },
+        
     ];
+
+
 
     return (
         <Flex

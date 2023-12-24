@@ -52,14 +52,14 @@
 					"value": "#000000",
 					"type": "color"
 				},
-				"darkmode": {
-					"id": "707cbf18-a426-4dd5-810b-05dd9f775c8c",
-					"value": "#9195fd",
-					"type": "color"
-				},
 				"base": {
 					"id": "832cca5d-273a-4f26-917f-cd16828e82dd",
 					"value": "#5a5c8c",
+					"type": "color"
+				},
+				"darkmode": {
+					"id": "707cbf18-a426-4dd5-810b-05dd9f775c8c",
+					"value": "#9195fd",
 					"type": "color"
 				}
 			},

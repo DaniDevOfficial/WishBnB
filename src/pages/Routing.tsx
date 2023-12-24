@@ -5,6 +5,7 @@ import {
 
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa"
+import { NavBar } from "../components/Navbar";
  
 
 const router = createHashRouter([
@@ -25,7 +26,6 @@ export function Routing() {
 
     return (
         <>
-            
             <RouterProvider router={router} />
             <IconButton
                 aria-label="toggle theme"

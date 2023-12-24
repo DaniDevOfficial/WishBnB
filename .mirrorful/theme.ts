@@ -18,8 +18,8 @@
       '700': '#00010d',
       '800': '#000000',
       '900': '#000000',
-      darkmode: '#9195fd',
       base: '#5a5c8c',
+      darkmode: '#9195fd',
     },
     background: {
       base: '#fbfefb',

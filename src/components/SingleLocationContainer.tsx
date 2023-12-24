@@ -31,14 +31,15 @@ export function SingleLocationContainer({ post }: { post: any }) {
                     src={image}
                     alt={title}
                     h="160px"
-                    maxW="270px"
+                    w="270px"
                     objectFit="cover"
                     borderRadius="md"
                     mb="2"
-                    loading="lazy"
+                    fallback={<Skeleton h="160px"
+                        w="270px" borderRadius="md" />}
                 />
             )}
-            <Text fontSize={"xs"} color={colorMode === 'dark' ? "smalltext.base" : "smalltext.base"} mb="1" display={isLoading ? "none" : "block"}>
+            <Text fontSize={"xs"} color={colorMode === 'dark' ? "smalltext.base" : "smalltext.base"} mb="1" display={isLoading ? "none" : "block"} >
                 {`Location: ${title}`}
             </Text>
             <Heading as="h3" size="md" mb="1" color={colorMode === 'dark' ? "text.darkmode" : "black"} display={isLoading ? "none" : "block"}>
