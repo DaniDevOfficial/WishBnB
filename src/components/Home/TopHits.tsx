@@ -32,17 +32,16 @@ export function TopHits() {
 
     return (
         <Flex
-            align="center"
-            direction="column"
+            flexWrap={"wrap"}
+            gap={4}            
+            justifyContent="center"
             my={10}
         >
-            <Wrap spacing="4">
                 {topHits.map((post, index) => (
                     <WrapItem key={index} >
                         <SingleLocationContainer post={post} />
                     </WrapItem>
                 ))}
-            </Wrap>
         </Flex>
     )
 }
