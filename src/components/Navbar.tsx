@@ -55,7 +55,7 @@ const dropdownLinks = [
   },
   {
     name: 'Github Repo',
-    path: '#'
+    path: 'https://github.com/DaniDevOfficial/WishBnN'
   }
 ];
 
@@ -143,15 +143,15 @@ export function Navbar() {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         toast({
-          title: "Login erfolgreich",
-          description: `Willkommen zurück, ${result.user.displayName}!`,
+          title: "Login Successful",
+          description: `Welcome, ${result.user.displayName}!`,
           status: "success",
         });
       })
       .catch((error) => {
         if (error.code === "auth/popup-closed-by-user") return;
         toast({
-          title: "Login fehlgeschlagen",
+          title: "Login error",
           description: error.code,
           status: "error",
         });
@@ -232,7 +232,7 @@ export function Navbar() {
             <Menu autoSelect={false} isLazy>
               {({ isOpen, onClose }) => (
                 <>
-                  <MenuButton _hover={{ color: 'blue.400' }}>
+                  <MenuButton _hover={{ color: 'accent.400' }}>
                     <Flex alignItems="center">
                       <Text>Community</Text>
                       <Icon
@@ -247,7 +247,6 @@ export function Navbar() {
                   </MenuButton>
                   <MenuList
                     zIndex={5}
-                    bg={useColorModeValue('rgb(255, 255, 255)', 'rgb(26, 32, 44)')}
                     border="none"
                     boxShadow={useColorModeValue(
                       '2px 4px 6px 2px rgba(160, 174, 192, 0.6)',
@@ -374,7 +373,7 @@ const NavLink = ({ name, path, onClose }: NavLinkProps) => {
       lineHeight="inherit"
       _hover={{
         textDecoration: 'none',
-        color: useColorModeValue('blue.500', 'blue.200')
+        color: 'accent.400',
       }}
       onClick={() => onClose()}
     >
@@ -391,8 +390,14 @@ interface MenuLinkProps {
 
 const MenuLink = ({ name, path, onClose }: MenuLinkProps) => {
   return (
-    <Link href={path} onClick={() => onClose()}>
-      <MenuItem _hover={{ color: 'blue.400', bg: useColorModeValue('gray.200', 'gray.700') }}>
+    <Link
+      href={path}
+      onClick={() => onClose()}
+      _hover={{
+        textDecoration: 'none',
+        color: 'accent.400',
+      }}>
+      <MenuItem _hover={{ color: 'accent.400'}}>
         <Text>{name}</Text>
       </MenuItem>
     </Link>
