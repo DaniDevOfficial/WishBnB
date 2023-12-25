@@ -24,22 +24,26 @@ import {
   ModalContent,
   ModalOverlay,
   ButtonGroup,
+  useToast,
+  Avatar,
+  Tooltip,
+  ButtonProps,
 } from '@chakra-ui/react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BiChevronDown } from 'react-icons/bi';
 import { GiCapybara } from "react-icons/gi";
-import { useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import Sound from '../Stuff/Sound.mp3';
-import { useNavigate } from 'react-router-dom';
 import { Post } from '../types/Post';
-import { Search2Icon } from '@chakra-ui/icons';
-import { set } from 'firebase/database';
+import { Search2Icon, SmallCloseIcon } from '@chakra-ui/icons';
+import { useNavigate } from 'react-router-dom';
+import { auth, googleProvider } from '../config/firebase';
+import { User, signInWithPopup } from 'firebase/auth';
 const navLinks = [
   { name: 'About', path: '/about' },
   { name: 'Rooms', path: '/rooms' },
 ];
-
 const dropdownLinks = [
   {
     name: 'Contact',
@@ -58,9 +62,15 @@ const dropdownLinks = [
 export function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchInput, setSearchInput] = useState("");
+  const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-
+  const toast = useToast({
+    duration: 5000,
+    isClosable: true,
+    position: "top-right",
+  });
+  const navigate = useNavigate();
   useEffect(() => {
     setPosts([
       {
@@ -113,15 +123,40 @@ export function Navbar() {
   }, [searchInput]);
 
   function handleSearch(id: string) {
-    alert(`/post/${id}`);
+    navigate(`/post/${id}`);
     onSearchBarClose();
   }
   function onSearchBarClose() {
     setSearchInput("");
     onSearchClose();
   }
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((u) => {
+      setUser(u);
 
 
+    });
+
+    return unsubscribe;
+  }, []);
+  function handleLogin() {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        toast({
+          title: "Login erfolgreich",
+          description: `Willkommen zurück, ${result.user.displayName}!`,
+          status: "success",
+        });
+      })
+      .catch((error) => {
+        if (error.code === "auth/popup-closed-by-user") return;
+        toast({
+          title: "Login fehlgeschlagen",
+          description: error.code,
+          status: "error",
+        });
+      });
+  }
   const [counter, setCounter] = useState(0);
   const [audio] = useState(new Audio(Sound));
   if (counter === 20) {
@@ -246,15 +281,60 @@ export function Navbar() {
             _hover={{ bg: "transparent", transform: "scale(1.2)" }}
             onClick={onSearchOpen}
           />
-          <Button
-            bgColor={useColorModeValue('primary.base', 'primary.darkmode')}
-            color={'white'}
-            size="md"
-            rounded="md"
-            display={'block'}>
+          {user ? (
+            <Menu>
+              {({ onClose }) => (
+                <>
+                  <MenuButton
+                    as={Button}
+                    variant={"ghost"}
+                    _hover={{ bg: "transparent", transform: "scale(1.1)" }}
+                    _active={{ bg: "transparent", transform: "scale(1.1)" }}
+                  >
+                    <Avatar
+                      size={"sm"}
+                      name={user!.displayName ?? undefined}
+                      src={user!.photoURL ?? undefined}
+                    />
+                  </MenuButton>
+                  <MenuList bg="gray.100" paddingX={2} paddingY={2}>
+                    <Flex
+                      justify={"space-between"}
+                      align={"center"}
+                      width={"100%"}
+                    >
+                      <Text color={"black"} fontWeight={"medium"}>
+                        {user!.displayName ?? user!.email ?? ""}
+                      </Text>
+                      <IconButton
+                        onClick={onClose}
+                        variant={"ghost"}
+                        color={"black"}
+                        _hover={{ bg: "transparent", transform: "scale(1.5)" }}
+                        aria-label="Schließen"
+                        icon={<SmallCloseIcon />}
+                      />
+                    </Flex>
 
-            Sign in
-          </Button>
+                    <AvatarMenuIcon
+                      isDisabled
+                      onClick={() => navigate("/profile")}
+                      marginBottom={2}
+                    >
+                      <Tooltip label="Zurzeit nicht verfügbar">Profil</Tooltip>
+                    </AvatarMenuIcon>
+                    <AvatarMenuIcon onClick={() => auth.signOut()}>
+                      Logout
+                    </AvatarMenuIcon>
+                  </MenuList>
+                </>
+              )}
+            </Menu>
+          ) : (
+            <Button onClick={handleLogin} _hover={{ transform: "scale(1.05)" }}>
+              Login
+            </Button>
+          )}
         </ButtonGroup>
       </Flex>
 
@@ -318,3 +398,23 @@ const MenuLink = ({ name, path, onClose }: MenuLinkProps) => {
     </Link>
   );
 };
+function AvatarMenuIcon({
+  onClick,
+  children,
+  ...rest
+}: PropsWithChildren<ButtonProps>) {
+  return (
+    <MenuItem
+      paddingY={3}
+      marginBottom={1}
+      _first={{ roundedTop: "md" }}
+      _last={{ roundedBottom: "md" }}
+      _hover={{ bg: "gray.200" }}
+      onFocus={(e) => e.target.blur()}
+      {...rest}
+      onClick={onClick}
+    >
+      {children}
+    </MenuItem>
+  );
+}

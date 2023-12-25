@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, RouterProvider, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { HomePage } from "./HomePage";
 import {
     IconButton, useColorMode
@@ -15,13 +15,15 @@ export function Routing() {
 
     return (
         <>
-            <Navbar />
             <BrowserRouter>
+                <Navbar />
 
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes >
+                <Footer />
+
             </BrowserRouter >
             <IconButton
                 aria-label="toggle theme"
@@ -34,7 +36,6 @@ export function Routing() {
                 icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
             />
 
-            <Footer />
 
         </>
 
