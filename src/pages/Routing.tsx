@@ -1,31 +1,30 @@
-import { Navigate, RouterProvider, createHashRouter } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { HomePage } from "./HomePage";
 import {
     IconButton, useColorMode
 
 } from "@chakra-ui/react";
 import { FaMoon, FaSun } from "react-icons/fa"
- 
+import { Footer } from "../components/Footer";
+import { Navbar } from "../components/Navbar";
 
-const router = createHashRouter([
 
-    {
-        index: true,
-        element: <HomePage />,
-    },
-    {
-        path: "*",
-        element: <Navigate to="/" />,
-    },
-
-]);
 
 export function Routing() {
     const { toggleColorMode, colorMode } = useColorMode();
 
     return (
         <>
-            <RouterProvider router={router} />
+            <BrowserRouter>
+                <Navbar />
+
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes >
+                <Footer />
+
+            </BrowserRouter >
             <IconButton
                 aria-label="toggle theme"
                 rounded="full"

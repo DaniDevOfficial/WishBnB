@@ -12,12 +12,11 @@ import {
   Divider,
   useColorModeValue,
   Heading,
-  useColorMode
+  
 } from '@chakra-ui/react';
 import { AiFillGithub } from 'react-icons/ai';
 
 const UserCard = () => {
-  const { colorMode } = useColorMode();
   return (
     <>
       <Heading as="h3" size="lg" mb="1" color={useColorModeValue("text.base", "text.darkmode")} display={"block"}>

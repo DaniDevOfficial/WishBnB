@@ -13,9 +13,10 @@ import {
 } from '@chakra-ui/react';
 import { GoChevronRight } from 'react-icons/go';
 import { MdBolt } from 'react-icons/md';
-
+import { useNavigate } from 'react-router-dom';
 const HeroSection = () => {
   const { colorMode } = useColorMode();
+  const navigate = useNavigate(); 
 
   return (
     <Stack direction={{ base: 'column', md: 'row' }} justifyContent="center" my={10}>
@@ -75,6 +76,7 @@ const HeroSection = () => {
             bgColor={useColorModeValue('primary.base', 'primary.darkmode')}
             _hover={{ opacity: 0.9, transform: 'scale(1.05)', transition: 'transform 0.3s ease-in-out' }}
             transition="transform 0.3s ease-in-out"
+            onClick={() => navigate('/rooms')}
           >
             <chakra.span color={"white"}> Explore all our Places now </chakra.span>
             <Icon color="white"as={MdBolt} h={4} w={4} ml={1} />
@@ -91,7 +93,7 @@ const HeroSection = () => {
             rounded="md"
             boxShadow="md"
             as={Link}
-            zIndex={55555555}
+            zIndex={5}
           >
             sum ting
           </Box>
