@@ -13,24 +13,37 @@ import {
   Icon,
   IconButton,
   useDisclosure,
-  useColorModeValue
+  useColorModeValue,
+  InputGroup,
+  VStack,
+  Highlight,
+  Input,
+  InputLeftElement,
+  Divider,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  ButtonGroup,
 } from '@chakra-ui/react';
-// Here we have used react-icons package for the icons
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BiChevronDown } from 'react-icons/bi';
-import { RiFlashlightFill } from 'react-icons/ri';
-
+import { GiCapybara } from "react-icons/gi";
+import { useEffect, useState } from 'react';
+import Sound from '../Stuff/Sound.mp3';
+import { useNavigate } from 'react-router-dom';
+import { Post } from '../types/Post';
+import { Search2Icon } from '@chakra-ui/icons';
+import { set } from 'firebase/database';
 const navLinks = [
-  { name: 'About', path: '#' },
-  { name: 'Features', path: '#' },
-  { name: 'Pricing', path: '#' }
+  { name: 'About', path: '/about' },
+  { name: 'Rooms', path: '/rooms' },
 ];
 
 const dropdownLinks = [
   {
-    name: 'Blog',
-    path: '#'
+    name: 'Contact',
+    path: '/contact'
   },
   {
     name: 'Documentation',
@@ -44,11 +57,135 @@ const dropdownLinks = [
 
 export function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [searchInput, setSearchInput] = useState("");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
 
+  useEffect(() => {
+    setPosts([
+      {
+        id: "1",
+        title: "The Pillow Fort Haven",
+        image: "",
+        location: "Cozy Corner, location1",
+        description: "Escape to the fluffiest haven on earth. Perfect for pillow fights and bedtime stories. A 5-star experience guaranteed!",
+        price: "50"
+      },
+      {
+        id: "2",
+        title: "The Bubble Wrap Bungalow",
+        image: "https://www.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
+        location: "Pop-a-Lot Lane, location2",
+        description: "Indulge in the therapeutic joy of endless bubble popping. A sanctuary for those who seek the ultimate stress relief!",
+        price: "40"
+      },
+      {
+        id: "3",
+        title: "The Underwater Treehouse",
+        image: "https://www.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
+        location: "Aqua Arboretum, location3",
+        description: "Dive into the world's first underwater treehouse. Explore the oceanic wonders and sleep surrounded by fishy neighbors!",
+        price: "30"
+      },
+    ]);
+  }
+    , []);
+  const {
+    isOpen: isSearchOpen,
+    onClose: onSearchClose,
+    onOpen: onSearchOpen,
+  } = useDisclosure({ defaultIsOpen: false });
+  useEffect(() => {
+    if (!searchInput) {
+      setFilteredPosts([]);
+      return;
+    }
+
+    const search = searchInput.toLowerCase();
+
+    const filtered = posts.filter((post) => {
+      const title = post.title.toLowerCase();
+
+      return title.includes(search);
+    });
+
+    setFilteredPosts(filtered);
+  }, [searchInput]);
+
+  function handleSearch(id: string) {
+    alert(`/post/${id}`);
+    onSearchBarClose();
+  }
+  function onSearchBarClose() {
+    setSearchInput("");
+    onSearchClose();
+  }
+
+
+  const [counter, setCounter] = useState(0);
+  const [audio] = useState(new Audio(Sound));
+  if (counter === 20) {
+    audio.play(); // is kinda loud. Pay attention
+    setCounter(0);
+  }
   return (
     <Box px={4} bg={useColorModeValue('white', 'gray.800')}>
+      <Modal size={"lg"} isOpen={isSearchOpen} onClose={onSearchBarClose}>
+        <ModalOverlay />
+        <ModalContent padding={2}>
+          <VStack gap={3}>
+            <InputGroup>
+              <InputLeftElement>
+                <Search2Icon color={"bg-highlight"} />
+              </InputLeftElement>
+              <Input
+                color={"black"}
+                fontWeight={"medium"}
+                borderColor="transparent"
+                focusBorderColor="transparent"
+                _hover={{ borderColor: "transparent" }}
+                placeholder="Suche einen Post"
+                autoFocus
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+            </InputGroup>
+            {filteredPosts.length > 0 && (
+              <>
+                <Divider />
+                <VStack gap={2} width={"100%"}>
+                  {filteredPosts.map((post, i) => (
+                    <Button
+                      key={i}
+                      onClick={() => handleSearch(post.id)}
+                      paddingY={6}
+                      width={"100%"}
+                      colorScheme="gray"
+                    >
+                      <Text
+                        textOverflow={"ellipsis"}
+                        overflow={"hidden"}
+                        width={"100%"}
+                        color={"black"}
+                        textAlign={"left"}
+                      >
+                        <Highlight
+                          styles={{ bg: "accent.base" }}
+                          query={searchInput}
+                        >
+                          {post.title}
+                        </Highlight>
+                      </Text>
+                    </Button>
+                  ))}
+                </VStack>
+              </>
+            )}
+          </VStack>
+        </ModalContent>
+      </Modal>
       <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={RiFlashlightFill} h={8} w={8} />
+        <Icon as={GiCapybara} h={8} w={8} onClick={() => setCounter(counter + 1)} cursor={"pointer"} />
 
         <HStack spacing={8} alignItems="center">
           <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">
@@ -92,9 +229,6 @@ export function Navbar() {
           </HStack>
         </HStack>
 
-        <Button colorScheme="blue" size="md" rounded="md" d={{ base: 'none', md: 'block' }}>
-          Sign in
-        </Button>
         <IconButton
           size="md"
           icon={isOpen ? <AiOutlineClose /> : <GiHamburgerMenu />}
@@ -102,6 +236,26 @@ export function Navbar() {
           display={{ base: 'inherit', md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
+
+        <ButtonGroup>
+          <IconButton
+            aria-label="Suche"
+            icon={<Search2Icon />}
+            variant={"ghost"}
+            color={useColorModeValue('primary.base', 'primary.darkmode')}
+            _hover={{ bg: "transparent", transform: "scale(1.2)" }}
+            onClick={onSearchOpen}
+          />
+          <Button
+            bgColor={useColorModeValue('primary.base', 'primary.darkmode')}
+            color={'white'}
+            size="md"
+            rounded="md"
+            display={'block'}>
+
+            Sign in
+          </Button>
+        </ButtonGroup>
       </Flex>
 
       {/* Mobile Screen Links */}
