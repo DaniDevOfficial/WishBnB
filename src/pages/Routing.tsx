@@ -7,6 +7,7 @@ import {
 import { FaMoon, FaSun } from "react-icons/fa"
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
+import { SinglePlacePage } from "./SinglePlacePage";
 
 
 
@@ -20,6 +21,7 @@ export function Routing() {
 
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/room/:id" element={<SinglePlacePage />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes >
                 <Footer />

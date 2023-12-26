@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Box, Image, Heading, Text, Skeleton, useColorMode, Button } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function SingleLocationContainer({ post }: { post: any }) {
-    const { title, image, description, price, location } = post;
+    const { title, image, description, price, location, id } = post;
     const [isLoading, setIsLoading] = useState(true);
     const { colorMode } = useColorMode();
-
+    const navigete = useNavigate();
     useEffect(() => {
         const delay = setTimeout(() => {
             setIsLoading(false);
@@ -14,6 +15,7 @@ export function SingleLocationContainer({ post }: { post: any }) {
 
         return () => clearTimeout(delay);
     }, []);
+    
 
     return (
         <Box boxShadow="rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" borderRadius="md" width={"1xl"} p={4} >
@@ -62,9 +64,7 @@ export function SingleLocationContainer({ post }: { post: any }) {
                 color={colorMode === 'dark' ? 'primary.darkmode' : 'primary.base'}
                 size="sm"
                 display={isLoading ? "none" : "block"}
-                onClick={() => {
-                    alert("You have booked this location!");
-                }}
+                onClick={() => {navigete(`room/${id}`)                }}
             >
                 Book Now
             </Button>
