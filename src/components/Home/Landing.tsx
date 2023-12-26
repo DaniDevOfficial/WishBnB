@@ -12,7 +12,7 @@ import {
   useColorMode
 } from '@chakra-ui/react';
 import { GoChevronRight } from 'react-icons/go';
-import { MdBolt } from 'react-icons/md';
+import { MdHouse } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 const HeroSection = () => {
   const { colorMode } = useColorMode();
@@ -79,7 +79,7 @@ const HeroSection = () => {
             onClick={() => navigate('/rooms')}
           >
             <chakra.span color={"white"}> Explore all our Places now </chakra.span>
-            <Icon color="white"as={MdBolt} h={4} w={4} ml={1} />
+            <Icon color="white"as={MdHouse} h={4} w={4} ml={1} />
           </chakra.button>
           <Box
             display="flex"
