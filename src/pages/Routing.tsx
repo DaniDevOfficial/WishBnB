@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation  } from "react-router-dom";
 import { HomePage } from "./HomePage";
 import {
     IconButton, useColorMode
@@ -8,17 +8,21 @@ import { FaMoon, FaSun } from "react-icons/fa"
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import { SingleRoom } from "./SingleRoom";
+import { useEffect } from "react";
 
 
 
 export function Routing() {
     const { toggleColorMode, colorMode } = useColorMode();
+    const  pathname  = useLocation();
 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
+  
     return (
         <>
-            <BrowserRouter>
                 <Navbar />
-
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/room/:id" element={<SingleRoom />} />
@@ -26,7 +30,6 @@ export function Routing() {
                 </Routes >
                 <Footer />
 
-            </BrowserRouter >
             <IconButton
                 aria-label="toggle theme"
                 rounded="full"
@@ -37,7 +40,7 @@ export function Routing() {
                 onClick={toggleColorMode}
                 icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
             />
-
+        
 
         </>
 

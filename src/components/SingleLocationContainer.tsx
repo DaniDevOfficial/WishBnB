@@ -64,7 +64,7 @@ export function SingleLocationContainer({ post }: { post: any }) {
                 color={colorMode === 'dark' ? 'primary.darkmode' : 'primary.base'}
                 size="sm"
                 display={isLoading ? "none" : "block"}
-                onClick={() => {navigete(`room/${id}`)                }}
+                onClick={() => {navigete(`room/${id}`)}}
             >
                 Book Now
             </Button>
