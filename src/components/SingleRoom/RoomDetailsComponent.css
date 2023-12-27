@@ -1,0 +1,52 @@
+/* RoomDetailsComponent.css */
+
+.react-calendar {
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+}
+
+.react-calendar {
+    border-radius: 6px;
+    font-weight: bold;
+    color: #6f48eb;
+}
+
+.react-calendar__tile--disabled {
+    background-color: #ff0000;
+    color: #333;
+}
+
+.react-calendar__tile--now {
+    background: #6f48eb33;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #6f48eb;
+}
+.react-calendar__tileDisabled {
+    background: #ff0000;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #333;
+}
+@media (prefers-color-scheme: dark) {
+  .chakra-ui-dark .react-calendar {
+    border: 1px solid #2d3748;
+    background: #2d3748;
+  }
+
+  .chakra-ui-dark .react-calendar__tile--disabled {
+    background-color: #ff0000;
+    color: #718096;
+  }
+
+  .chakra-ui-dark .react-calendar__tile--now {
+    background: #5135ad33;
+    color: #6f48eb;
+  }
+  .chakra-ui-dark .react-calendar {
+    border-radius: 6px;
+    font-weight: bold;
+    color: #cbcbcb;
+}
+
+}

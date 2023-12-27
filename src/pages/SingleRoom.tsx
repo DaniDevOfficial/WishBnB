@@ -19,7 +19,9 @@ export function SingleRoom() {
             { userId: "user2", text: "Beautiful location." },
         ],
         unavailableDates: [
-            { startDate: "2023-02-01", endDate: "2023-02-10" },
+            { startDate: "2023-12-01", endDate: "2023-12-10" },
+            { startDate: "2023-12-11", endDate: "2023-12-13" },
+            { startDate: "2023-12-01", endDate: "2023-12-10" },
         ],
         additionalFeatures: [
             { name: "Scuba Diving Experience", pricePerNight: 10 },
