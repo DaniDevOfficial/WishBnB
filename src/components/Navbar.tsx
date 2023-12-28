@@ -163,6 +163,12 @@ export function Navbar() {
     audio.play(); // is kinda loud. Pay attention
     setCounter(0);
   }
+
+  function CapyClick() {
+    setCounter(counter + 1);
+    navigate("/");
+  }
+
   return (
     <Box px={4} bg={useColorModeValue('white', 'gray.800')}>
       <Modal size={"lg"} isOpen={isSearchOpen} onClose={onSearchBarClose}>
@@ -220,7 +226,7 @@ export function Navbar() {
         </ModalContent>
       </Modal>
       <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={GiCapybara} h={8} w={8} onClick={() => setCounter(counter + 1)} cursor={"pointer"} />
+        <Icon as={GiCapybara} h={8} w={8} onClick={CapyClick} cursor={"pointer"} />
 
         <HStack spacing={8} alignItems="center">
           <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">
