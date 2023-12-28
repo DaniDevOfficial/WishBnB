@@ -5,6 +5,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './RoomDetailsComponent.css';
+import { getAllData } from '../../repo/repo';
 export function DescriptionAndRent({ content }) {
     const mapContainerStyle = {
         width: '100%',
@@ -15,7 +16,10 @@ export function DescriptionAndRent({ content }) {
         lat: 47.459268,
         lng: 8.751775,
     };
-
+    const fetchData = async () => {
+        const data = await getAllData("/");
+        console.log(data);
+    }
     return (
         <Box mt={4}>
             <Flex align="center" mb={2}>
@@ -88,7 +92,9 @@ export function DescriptionAndRent({ content }) {
                 <Text>Location 2</Text>
                 <Text>Location 3</Text>
             </Stack>
-
+            <Button onClick={fetchData}>
+                This is for testing purposes only
+            </Button>
         </Box>
     );
 }
