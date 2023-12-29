@@ -1,7 +1,7 @@
 import { ref, get } from 'firebase/database';
 import { database } from '../config/firebase';
 
-export async function getAllData(path: string) {
+export async function getAllDataInRoute(path: string) {
   const dataRef = ref(database, path);
 
   try {
@@ -24,11 +24,10 @@ export async function getUserByName(usernameToFind: string) {
     if (data && typeof data === 'object') {
       const usersArray: { username: string }[] = Object.values(data);
 
-      const user: User | undefined = usersArray.find((user) => user.username === usernameToFind);
+      const user = usersArray.find((user) => user.username === usernameToFind);
       if (user) {
         return user;
       } else {
-        // user doesnt exist (no console log for safety)
         return null;
       }
     } else {
@@ -50,11 +49,9 @@ export async function getUserByID(userID: string) {
 
 
     if (data && typeof data === 'object') {
-      const usersArray: {
-        userID: string; username: string; hashedPassword: string
-      }[] = Object.values(data);
+      const usersArray = Object.values(data);
 
-      const user: User | undefined = usersArray.find((user) => user.userID === userID);
+      const user = usersArray.find((user) => user.userID === userID);
       if (user) {
         return user;
       } else {
@@ -108,8 +105,6 @@ export async function getPasswordsWithCreatorID(creatorID: string, key: string) 
     throw error;
   }
 }
-
-
 
 export async function getPasswordByID(passwordID, key) {
   const dataRef = ref(database, "/passwords");

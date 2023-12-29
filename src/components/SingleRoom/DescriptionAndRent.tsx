@@ -5,7 +5,7 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './RoomDetailsComponent.css';
-import { getAllData } from '../../repo/repo';
+import { getAllDataInRoute } from '../../repo/repo';
 export function DescriptionAndRent({ content }) {
     const mapContainerStyle = {
         width: '100%',
@@ -17,7 +17,7 @@ export function DescriptionAndRent({ content }) {
         lng: 8.751775,
     };
     const fetchData = async () => {
-        const data = await getAllData("/");
+        const data = await getAllDataInRoute("/rooms");
         console.log(data);
     }
     return (
