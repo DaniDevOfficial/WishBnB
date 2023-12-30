@@ -40,6 +40,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth, googleProvider } from '../config/firebase';
 import { User, signInWithPopup } from 'firebase/auth';
 import { Room } from '../types/Room';
+import { checkIfAdmin, checkIfCreator } from '../repo/repo';
 const navLinks = [
   { name: 'About', path: '/about' },
   { name: 'Rooms', path: '/rooms' },
@@ -59,12 +60,14 @@ const dropdownLinks = [
   }
 ];
 
-export function Navbar({ rooms }: { rooms: Room[]}) {
+export function Navbar({ rooms }: { rooms: Room[] }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchInput, setSearchInput] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [posts, setPosts] = useState<Room[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Room[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isCreator, setIsCreator] = useState(false);
   const toast = useToast({
     duration: 5000,
     isClosable: true,
@@ -109,7 +112,10 @@ export function Navbar({ rooms }: { rooms: Room[]}) {
     const unsubscribe = auth.onAuthStateChanged((u) => {
       setUser(u);
 
-
+      if (u) {
+        checkIfCreator(u.uid).then(setIsCreator);
+        checkIfAdmin(u.uid).then(setIsAdmin);
+      }
     });
 
     return unsubscribe;
@@ -297,6 +303,22 @@ export function Navbar({ rooms }: { rooms: Room[]}) {
                     >
                       <Tooltip label="Zurzeit nicht verfügbar">Profil</Tooltip>
                     </AvatarMenuIcon>
+                    {isAdmin && (
+                      <AvatarMenuIcon
+                        onClick={() => navigate("/admin")}
+                        marginBottom={2}
+                      >
+                        Admin
+                      </AvatarMenuIcon>
+                    )}
+                    {isCreator && (
+                      <AvatarMenuIcon
+                        onClick={() => navigate("/YourRooms")}
+                        marginBottom={2}
+                      >
+                        Manage Rooms
+                      </AvatarMenuIcon>
+                    )}
                     <AvatarMenuIcon onClick={() => auth.signOut()}>
                       Logout
                     </AvatarMenuIcon>
@@ -372,7 +394,7 @@ const MenuLink = ({ name, path, onClose }: MenuLinkProps) => {
         textDecoration: 'none',
         color: 'accent.400',
       }}>
-      <MenuItem _hover={{ color: 'accent.400'}}>
+      <MenuItem _hover={{ color: 'accent.400' }}>
         <Text>{name}</Text>
       </MenuItem>
     </Link>

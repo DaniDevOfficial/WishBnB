@@ -25,7 +25,6 @@ export function Routing() {
             try {
                 const data = await getAllDataInRoute("/rooms");
                 setRooms(data);
-                console.log(data);
             } catch (error) {
                 console.error(error);
             }

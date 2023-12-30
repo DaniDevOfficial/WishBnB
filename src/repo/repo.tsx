@@ -6,8 +6,65 @@ export async function getAllDataInRoute(path: string) {
 
   try {
     const snapshot = await get(dataRef);
-    console.log(snapshot.val())
     return snapshot.val();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+export async function checkIfCreator(userID: string) {
+  const dataRef = ref(database, 'creators');
+  try {
+    const snapshot = await get(dataRef);
+    const data = snapshot.val();
+
+    if (data && typeof data === 'object') {
+      const usersArray = Object.values(data);
+
+      console.log(usersArray);
+
+      const isCreator = usersArray.includes(userID);
+      
+      if (isCreator) {
+        console.log("You are a creator");
+        return true;
+      } else {
+        console.log("You are not a creator");
+        return false;
+      }
+    } else {
+      console.error('Invalid data format');
+      return false;
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+export async function checkIfAdmin(userID: string) {
+  const dataRef = ref(database, 'admins');
+  try {
+    const snapshot = await get(dataRef);
+    const data = snapshot.val();
+
+    if (data && typeof data === 'object') {
+      const usersArray = Object.values(data);
+
+      console.log(usersArray);
+
+      const isAdmin = usersArray.includes(userID);
+      
+      if (isAdmin) {
+        console.log("You are an admin");
+        return true;
+      } else {
+        console.log("You are not an admin");
+        return false;
+      }
+    } else {
+      console.error('Invalid data format');
+      return false;
+    }
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
