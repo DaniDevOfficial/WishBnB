@@ -13,12 +13,10 @@ const roomDetails = {
     ],
     unavailableDates: [
       { startDate: "2023-02-01", endDate: "2023-02-10" },
-      // Add more entries as needed
     ],
     additionalFeatures: [
       { name: "Scuba Diving Experience", pricePerNight: 10 },
       { name: "Private Chef", pricePerNight: 20 },
-      // Add more features as needed
     ],
   };
   

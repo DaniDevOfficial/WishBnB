@@ -1,7 +1,8 @@
+import { Room } from '../../types/Room';
 import { SingleLocationContainer } from '../SingleLocationContainer'
 import { Flex, WrapItem } from '@chakra-ui/react'
 
-export function TopHits({ rooms }) {
+export function TopHits({ rooms }: { rooms: Room[] }) {
 
     const topHits = rooms.slice(0, 3);
 

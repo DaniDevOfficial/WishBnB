@@ -35,11 +35,11 @@ import { BiChevronDown } from 'react-icons/bi';
 import { GiCapybara } from "react-icons/gi";
 import { PropsWithChildren, useEffect, useState } from 'react';
 import Sound from '../Stuff/Sound.mp3';
-import { Post } from '../types/Post';
 import { Search2Icon, SmallCloseIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { auth, googleProvider } from '../config/firebase';
 import { User, signInWithPopup } from 'firebase/auth';
+import { Room } from '../types/Room';
 const navLinks = [
   { name: 'About', path: '/about' },
   { name: 'Rooms', path: '/rooms' },
@@ -59,12 +59,12 @@ const dropdownLinks = [
   }
 ];
 
-export function Navbar() {
+export function Navbar({ rooms }: { rooms: Room[]}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchInput, setSearchInput] = useState("");
   const [user, setUser] = useState<User | null>(null);
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Room[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState<Room[]>([]);
   const toast = useToast({
     duration: 5000,
     isClosable: true,
@@ -72,32 +72,7 @@ export function Navbar() {
   });
   const navigate = useNavigate();
   useEffect(() => {
-    setPosts([
-      {
-        id: "1",
-        title: "The Pillow Fort Haven",
-        image: "",
-        location: "Cozy Corner, location1",
-        description: "Escape to the fluffiest haven on earth. Perfect for pillow fights and bedtime stories. A 5-star experience guaranteed!",
-        price: "50"
-      },
-      {
-        id: "2",
-        title: "The Bubble Wrap Bungalow",
-        image: "https://www.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
-        location: "Pop-a-Lot Lane, location2",
-        description: "Indulge in the therapeutic joy of endless bubble popping. A sanctuary for those who seek the ultimate stress relief!",
-        price: "40"
-      },
-      {
-        id: "3",
-        title: "The Underwater Treehouse",
-        image: "https://www.gannett-cdn.com/authoring/2010/11/15/NTPC/ghows-CO-c1d58d9d-95f4-4cc9-b0ce-82a742d88627-223af73c.jpeg?crop=759,430,x0,y0&width=2560",
-        location: "Aqua Arboretum, location3",
-        description: "Dive into the world's first underwater treehouse. Explore the oceanic wonders and sleep surrounded by fishy neighbors!",
-        price: "30"
-      },
-    ]);
+    setPosts(rooms);
   }
     , []);
   const {
@@ -123,7 +98,7 @@ export function Navbar() {
   }, [searchInput]);
 
   function handleSearch(id: string) {
-    navigate(`/post/${id}`);
+    navigate(`/room/${id}`);
     onSearchBarClose();
   }
   function onSearchBarClose() {
@@ -163,12 +138,6 @@ export function Navbar() {
     audio.play(); // is kinda loud. Pay attention
     setCounter(0);
   }
-
-  function CapyClick() {
-    setCounter(counter + 1);
-    navigate("/");
-  }
-
   return (
     <Box px={4} bg={useColorModeValue('white', 'gray.800')}>
       <Modal size={"lg"} isOpen={isSearchOpen} onClose={onSearchBarClose}>
@@ -226,7 +195,7 @@ export function Navbar() {
         </ModalContent>
       </Modal>
       <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={GiCapybara} h={8} w={8} onClick={CapyClick} cursor={"pointer"} />
+        <Icon as={GiCapybara} h={8} w={8} onClick={() => setCounter(counter + 1)} cursor={"pointer"} />
 
         <HStack spacing={8} alignItems="center">
           <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">

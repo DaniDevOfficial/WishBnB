@@ -36,10 +36,10 @@ export function Routing() {
 
 return (
     <>
-        <Navbar />
+        <Navbar rooms={rooms}/>
         <Routes>
             <Route path="/" element={<HomePage rooms={rooms}/>} />
-            <Route path="/room/:id" element={<SingleRoom />} />
+            <Route path="/room/:id" element={<SingleRoom rooms={rooms}/>} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes >
         <Footer />

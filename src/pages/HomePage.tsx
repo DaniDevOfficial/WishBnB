@@ -3,7 +3,8 @@ import Landing from '../components/Home/Landing'
 import { Stats } from '../components/Home/Stats'
 import { TopHits } from '../components/Home/TopHits'
 import { Container } from '@chakra-ui/react'
-export function HomePage({ rooms }) {
+import { Room } from '../types/Room'
+export function HomePage({ rooms }: { rooms: Room[] }) {
     console.log(rooms)
     return (
         <>
