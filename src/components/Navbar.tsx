@@ -316,7 +316,7 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                         onClick={() => navigate("/YourRooms")}
                         marginBottom={2}
                       >
-                        Manage Rooms
+                        Manage Your Rooms
                       </AvatarMenuIcon>
                     )}
                     <AvatarMenuIcon onClick={() => auth.signOut()}>

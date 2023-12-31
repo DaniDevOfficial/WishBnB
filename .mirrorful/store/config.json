@@ -317,6 +317,68 @@
 					"value": "#718096",
 					"type": "color"
 				}
+			},
+			"backdrop": {
+				"50": {
+					"id": "a5e3fdd3-1356-4a99-b637-a30059702333",
+					"value": "#e4e4e4",
+					"type": "color"
+				},
+				"100": {
+					"id": "cd5a2c97-cd41-4a8c-a524-ba7d928ed81a",
+					"value": "#b7b0b7",
+					"type": "color"
+				},
+				"200": {
+					"id": "c8cf1429-114d-4c49-a75e-d08b147b8155",
+					"value": "#a69ea5",
+					"type": "color"
+				},
+				"300": {
+					"id": "7f12622f-df63-48c8-a571-b64cf112a07a",
+					"value": "#958b94",
+					"type": "color"
+				},
+				"400": {
+					"id": "0f6137ff-c426-42ef-b350-0bf20209a233",
+					"value": "#877c86",
+					"type": "color"
+				},
+				"500": {
+					"id": "5f1a4cf3-cf52-4741-ab4c-dc6980398766",
+					"value": "#756b74",
+					"type": "color"
+				},
+				"600": {
+					"id": "ee4dec33-ea2e-459c-9fd1-12442b7842a1",
+					"value": "#625a62",
+					"type": "color"
+				},
+				"700": {
+					"id": "79e5979c-0ff3-4727-b937-034862cb5538",
+					"value": "#413b40",
+					"type": "color"
+				},
+				"800": {
+					"id": "589dc94f-73d0-415d-bbbc-5dcf5f13b278",
+					"value": "#2e2a2e",
+					"type": "color"
+				},
+				"900": {
+					"id": "9ca84b64-856f-4b59-b6f0-07fcea1359eb",
+					"value": "#1b191b",
+					"type": "color"
+				},
+				"base": {
+					"id": "18b8474c-4ad1-485a-bdf4-6e416a892e52",
+					"value": "#e4e4e4",
+					"type": "color"
+				},
+				"darkmode": {
+					"id": "086fcf1c-7ea6-4de4-92c7-3f46b0577e95",
+					"value": "#383c4a",
+					"type": "color"
+				}
 			}
 		},
 		"typography": {

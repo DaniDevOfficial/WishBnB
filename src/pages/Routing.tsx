@@ -10,6 +10,7 @@ import { Navbar } from "../components/Navbar";
 import { SingleRoom } from "./SingleRoom";
 import { useEffect, useState } from "react";
 import { getAllDataInRoute } from "../repo/repo";
+import { YourRooms } from "./YourRooms";
 
 
 
@@ -39,6 +40,7 @@ return (
         <Routes>
             <Route path="/" element={<HomePage rooms={rooms}/>} />
             <Route path="/room/:id" element={<SingleRoom rooms={rooms}/>} />
+            <Route path="/YourRooms" element={<YourRooms rooms={rooms}/>} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes >
         <Footer />
