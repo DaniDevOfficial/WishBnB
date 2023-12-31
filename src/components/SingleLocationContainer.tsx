@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function SingleLocationContainer({ post }: { post: any }) {
-    const { title, image, description, price, location, id } = post;
+    const { title, images, description, price, location, id } = post;
     const [isLoading, setIsLoading] = useState(true);
     const { colorMode } = useColorMode();
     const navigete = useNavigate();
+    const image = images[0];
     useEffect(() => {
         const delay = setTimeout(() => {
             setIsLoading(false);

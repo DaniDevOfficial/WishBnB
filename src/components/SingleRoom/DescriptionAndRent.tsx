@@ -5,7 +5,10 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './RoomDetailsComponent.css';
-export function DescriptionAndRent({ content }) {
+import { getAllDataInRoute } from '../../repo/repo';
+import { Room } from '../../types/Room';
+
+export function DescriptionAndRent({ room }: { room: Room }) {
     const mapContainerStyle = {
         width: '100%',
         height: '300px',
@@ -15,22 +18,25 @@ export function DescriptionAndRent({ content }) {
         lat: 47.459268,
         lng: 8.751775,
     };
-
+    const fetchData = async () => {
+        const data = await getAllDataInRoute("/rooms");
+        console.log(data);
+    }
     return (
         <Box mt={4}>
             <Flex align="center" mb={2}>
                 <Icon as={FaUserCircle} boxSize={6} color="gray.500" mr={2} />
-                <Text fontWeight="bold">{content.creator}</Text>
+                <Text fontWeight="bold">{room.creator}</Text>
             </Flex>
             <Heading as="h2" size="lg" mb={2}>
-                {content.title}
+                {room.title}
             </Heading>
             <Text color={useColorModeValue("text.base", "text.darkmode")} fontSize="md" mb={4}>
-                {content.longDescription}
+                {room.longDescription}
             </Text>
             <Flex align="center" mb={4}>
                 <Text fontSize="lg" fontWeight="bold" color={useColorModeValue("accent.base", "accent.darkmode")}>
-                    {content.price} CHF
+                    {room.price} CHF
                 </Text>
                 <Text color="gray.500" ml={2}>
                     Per Night
@@ -41,11 +47,11 @@ export function DescriptionAndRent({ content }) {
                     Additional Features:
                 </Heading>
                 <UnorderedList>
-                    {Object.keys(content.additionalFeatures).map((featureName) => {
-                        const feature = content.additionalFeatures[featureName];
-                        console.log(feature);
+                    {Object.keys(room.additionalFeatures).map((featureIndex) => {
+                        const feature = room.additionalFeatures[featureIndex]
+
                         return (
-                            <ListItem key={featureName}>
+                            <ListItem key={featureIndex}>
                                 {feature.name}: {feature.pricePerNight} CHF per night
                             </ListItem>
                         );
@@ -60,14 +66,14 @@ export function DescriptionAndRent({ content }) {
                     <Marker position={center} />
                 </GoogleMap>
             </LoadScript>
-            {content.unavailableDates.length > 0 && (
+            {room.unavailableDates.length > 0 && (
                 <Box mt={4}>
                     <Heading as="h3" size="md">
                         Available Dates:
                     </Heading>
                     <Calendar
                         tileDisabled={({ date }) =>
-                            content.unavailableDates.some(
+                            room.unavailableDates.some(
                                 (dateRange) =>
                                     new Date(date) >= new Date(dateRange.startDate) &&
                                     new Date(date) <= new Date(dateRange.endDate)
@@ -88,7 +94,9 @@ export function DescriptionAndRent({ content }) {
                 <Text>Location 2</Text>
                 <Text>Location 3</Text>
             </Stack>
-
+            <Button onClick={fetchData}>
+                This is for testing purposes only
+            </Button>
         </Box>
     );
 }

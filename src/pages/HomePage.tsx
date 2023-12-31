@@ -3,13 +3,13 @@ import Landing from '../components/Home/Landing'
 import { Stats } from '../components/Home/Stats'
 import { TopHits } from '../components/Home/TopHits'
 import { Container } from '@chakra-ui/react'
-export function HomePage() {
-
+import { Room } from '../types/Room'
+export function HomePage({ rooms }: { rooms: Room[] }) {
     return (
         <>
             <Container maxW="5xl" p={{ base: 4, sm: 10 }} >
                 <Landing />
-                <TopHits />
+                <TopHits rooms={rooms}/>
                 <Stats />
                 <UserCard />
             </Container>
