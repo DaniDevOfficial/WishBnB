@@ -313,7 +313,7 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                     )}
                     {isCreator && (
                       <AvatarMenuIcon
-                        onClick={() => navigate("/YourRooms")}
+                        onClick={() => navigate("/Creator")}
                         marginBottom={2}
                       >
                         Manage Your Rooms

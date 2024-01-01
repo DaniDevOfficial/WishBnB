@@ -34,6 +34,8 @@ export function SingleOffer({ room }: { room: Room }) {
                         transition="transform 0.2s"
                         _hover={{ transform: 'scale(1.1)' }}
                         onClick={handleClick}
+                        cursor={"pointer"}
+
                     >
                         <Icon as={FaBed} />
                     </Box>
@@ -51,6 +53,8 @@ export function SingleOffer({ room }: { room: Room }) {
                             w={10}
                             transition="transform 0.2s"
                             _hover={{ transform: 'scale(1.1)' }}
+                            cursor={"pointer"}
+
                         >
                             <Icon as={CiEdit} />
                         </Box>
@@ -66,6 +70,8 @@ export function SingleOffer({ room }: { room: Room }) {
                             w={10}
                             transition="transform 0.2s"
                             _hover={{ transform: 'scale(1.1)' }}
+                            cursor={"pointer"}
+
                         >
                             <Icon as={MdDelete} />
                         </Box>

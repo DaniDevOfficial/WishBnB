@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { HomePage } from "./HomePage";
 import {
+    Button,
     IconButton, useColorMode
 
 } from "@chakra-ui/react";
@@ -40,7 +41,8 @@ return (
         <Routes>
             <Route path="/" element={<HomePage rooms={rooms}/>} />
             <Route path="/room/:id" element={<SingleRoom rooms={rooms}/>} />
-            <Route path="/YourRooms" element={<YourRooms rooms={rooms}/>} />
+            <Route path="/Creator" element={<YourRooms rooms={rooms}/>} />
+            <Route path="/Creator/Upload/NewRoom" element={<input value={"hey"}/>} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes >
         <Footer />
