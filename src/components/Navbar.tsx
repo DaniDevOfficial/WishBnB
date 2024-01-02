@@ -140,6 +140,10 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
   }
   const [counter, setCounter] = useState(0);
   const [audio] = useState(new Audio(Sound));
+  function handlyeCapy() {
+    setCounter(counter + 1);
+    navigate("/");
+  }
   if (counter === 20) {
     audio.play(); // is kinda loud. Pay attention
     setCounter(0);
@@ -201,7 +205,8 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
         </ModalContent>
       </Modal>
       <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={GiCapybara} h={8} w={8} onClick={() => setCounter(counter + 1)} cursor={"pointer"} />
+        <Icon as={GiCapybara} h={8} w={8} onClick={handlyeCapy} cursor={"pointer"} _hover={{ bg: "transparent", transform: "scale(1.2)" }} transition="all .25s ease-in-out"/>
+
 
         <HStack spacing={8} alignItems="center">
           <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">
