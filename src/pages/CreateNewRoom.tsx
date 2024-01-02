@@ -1,7 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ref, set, push } from 'firebase/database';
-import { database } from '../config/firebase';
+import {
+    ref as StorageRef,
+    uploadBytes,
+    getDownloadURL,
+
+} from 'firebase/storage'
+import { database, storage } from '../config/firebase';
 import { auth } from '../config/firebase';
 import { Flex, SkeletonText, Text, chakra, Heading, VStack, Form, Input, Button, FormControl, FormLabel, Textarea, HStack, IconButton, useColorModeValue, } from '@chakra-ui/react';
 import { Room } from '../types/Room';
@@ -19,6 +25,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
             "pricePerNight": 20
         }
     ]
+    const imagesarray = [];
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');
     const [price, setPrice] = useState('');
@@ -26,6 +33,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
     const [images, setImages] = useState([]);
     const [longDescription, setLongDescription] = useState('');
     const [additionalFeatures, setAdditionalFeatures] = useState(additionalFeaturesTmp);
+    const [imagesFile, setImagesFile] = useState<File[]>([]);
 
     useEffect(() => {
         if (selectedRoom) {
@@ -48,7 +56,10 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
     }, [selectedRoom]);
 
     async function saveRoom() {
-        if (!title || !description || !price || !location || !images || !longDescription) {
+        await uploadImages(imagesFile)
+        setImages(imagesarray)
+        console.log(images)
+        if (!title || !description || !price || !location || !imagesarray || !longDescription || false) {
             console.error('Missing Fields');
             return;
         }
@@ -73,7 +84,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                 description,
                 price,
                 location,
-                images,
+                images: imagesarray,
                 longDescription,
                 additionalFeatures,
                 creatorID,
@@ -112,16 +123,47 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
     };
 
 
+    const handleRemoveImage = (index: number) => {
+        const updatedImages = [...imagesFile];
+        updatedImages.splice(index, 1);
+        setImagesFile(updatedImages);
+    };
+
+    function addImage(e: any) {
+        const file = e.target.files[0];
+        if (file) {
+            setImagesFile((prevImages) => [...prevImages, file]);
+        }
+    }
+
+    async function uploadImages(files) {
+        try {
+            const uploadedImageUrls = await Promise.all(
+                files.map(async (file) => {
+                    const fileRef = StorageRef(storage, `images/Uploaded/${file.name}`);
+                    try {
+                        await uploadBytes(fileRef, file);
+                        const url = await getDownloadURL(fileRef);
+                        imagesarray.push(url);
+
+                    } catch (uploadError) {
+                        console.error('Error uploading file:', uploadError);
+                    }
+                })
+            );
+        } catch (error) {
+            console.error('Error uploading images:', error);
+        }
+    }
 
 
-
-
-
-
+    const handleclick = () => {
+        console.log(images)
+    }
 
     return (
         <Flex alignItems="center" w="100%" direction="column">
-            <Heading mb="4">Create A New Room</Heading>
+            <Heading mb="4" onClick={handleclick}>Create A New Room</Heading>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -129,12 +171,12 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                 }}
                 style={{ width: '100%' }}
             >
-                <FormControl mb="4" isRequired>
+                <FormControl mb="4" >
                     <FormLabel>Title</FormLabel>
                     <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter title" />
                 </FormControl>
 
-                <FormControl mb="4" isRequired>
+                <FormControl mb="4" >
                     <FormLabel>Description</FormLabel>
                     <Textarea
                         value={description}
@@ -142,8 +184,15 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                         placeholder="Enter description"
                     />
                 </FormControl>
-
-                <FormControl mb="4" isRequired>
+                <FormControl mb="4" >
+                    <FormLabel>Long Description</FormLabel>
+                    <Textarea
+                        value={longDescription}
+                        onChange={(e) => setLongDescription(e.target.value)}
+                        placeholder="Enter a long version of the previous description (in md format)"
+                    />
+                </FormControl>
+                <FormControl mb="4" >
                     <FormLabel>Price Per Night</FormLabel>
                     <Input
                         type="number"
@@ -153,12 +202,12 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                     />
                 </FormControl>
 
-                <FormControl mb="4" isRequired>
+                <FormControl mb="4" >
                     <FormLabel>Location</FormLabel>
                     <Input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Enter location" />
                 </FormControl>
 
-                <FormControl mb="4">
+                <FormControl mb="4" >
                     <FormLabel>Additional Features</FormLabel>
                     <VStack spacing="2">
                         {additionalFeatures.map((feature, index) => (
@@ -167,6 +216,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                                 <Input
                                     placeholder="Feature Name"
                                     value={feature.name}
+                                    isRequired
                                     onChange={(e) => {
                                         const updatedFeatures = [...additionalFeatures];
                                         updatedFeatures[index].name = e.target.value;
@@ -176,6 +226,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                                 <Input
                                     type="number"
                                     placeholder="Feature Price"
+                                    isRequired
                                     value={feature.pricePerNight}
                                     onChange={(e) => {
                                         const updatedFeatures = [...additionalFeatures];
@@ -197,7 +248,30 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                         Add Feature
                     </Button>
                 </FormControl>
-
+                <FormControl mb="4" isRequired>
+                    <FormLabel>Room Images</FormLabel>
+                    <VStack spacing="2">
+                        {imagesFile.map((image, index) => (
+                            <HStack key={index} spacing="2">
+                                <Text>{index === 0 ? 'Cover Image' : `Image ${index + 1}:`} </Text>
+                                <SkeletonText isLoaded={true}>
+                                    <chakra.img
+                                        src={URL.createObjectURL(image)}
+                                        alt={`Room ${index + 1}`}
+                                        maxW="200px"
+                                        maxH="200px"
+                                    />
+                                </SkeletonText>
+                                <IconButton
+                                    icon={<FaTrash />}
+                                    aria-label="Delete Image"
+                                    onClick={() => handleRemoveImage(index)}
+                                />
+                            </HStack>
+                        ))}
+                    </VStack>
+                    <Input type="file" accept="image/*" onChange={addImage} mt="2" />
+                </FormControl>
                 <Button bgColor={useColorModeValue('accent.base', 'accent.darkmode')} type="submit">
                     Save Room
                 </Button>
