@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import { HomePage } from "./HomePage";
 import {
     Button,
+    Container,
     IconButton, useColorMode
 
 } from "@chakra-ui/react";
@@ -13,6 +14,8 @@ import { useEffect, useState } from "react";
 import { getAllDataInRoute, getUserRoles } from "../repo/repo";
 import { YourRooms } from "./YourRooms";
 import { auth } from "../config/firebase";
+import { CreateNewOffer } from "./CreateNewOffer";
+import { CreateNewRoom } from "./CreateNewRoom";
 
 
 
@@ -44,7 +47,7 @@ export function Routing() {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             const userId = user?.uid;
-            if (!userId) return(
+            if (!userId) return (
                 setHasAllowedRoleCreator(false),
                 setHasAllowedRoleAdmin(false)
             );
@@ -74,19 +77,19 @@ export function Routing() {
     return (
         <>
             <Navbar rooms={rooms} />
-            <Routes>
-                <Route path="/" element={<HomePage rooms={rooms} />} />
-                <Route path="/room/:id" element={<SingleRoom rooms={rooms} />} />
-                {hasAllowedRoleCreator ? (
-                    <Route path="/Creator" element={<YourRooms rooms={rooms} />} />
-                ) : (
-                    <Route path="/Creator" element={<Navigate to="/" />} />
-                )}
-                {hasAllowedRoleCreator && (
-                    <Route path="/Creator/Upload/NewRoom" element={<input value={"hey"} />} />
-                )}
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
+            <Container maxW="5xl" p={{ base: 4, sm: 10 }} >
+                <Routes>
+                    <Route path="/" element={<HomePage rooms={rooms} />} />
+                    <Route path="/room/:id" element={<SingleRoom rooms={rooms} />} />
+                    {hasAllowedRoleCreator ? (
+                        <Route path="/Creator" element={<YourRooms rooms={rooms} />} />
+                    ) : (
+                        <Route path="/Creator" element={<YourRooms rooms={rooms} />} />
+                    )}
+                    <Route path="/Creator/Upload/NewRoom" element={<CreateNewRoom selectedRoom={null} />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </Container>
             <Footer />
 
             <IconButton

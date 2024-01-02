@@ -7,12 +7,10 @@ import { Room } from '../types/Room'
 export function HomePage({ rooms }: { rooms: Room[] }) {
     return (
         <>
-            <Container maxW="5xl" p={{ base: 4, sm: 10 }} >
                 <Landing />
                 <TopHits rooms={rooms}/>
                 <Stats />
                 <UserCard />
-            </Container>
         </>
     )
 }

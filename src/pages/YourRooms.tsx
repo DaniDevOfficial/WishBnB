@@ -12,9 +12,7 @@ export function YourRooms({ rooms }: { rooms: Room[] }) {
     console.log(auth.currentUser?.uid);
     return (
         <>
-            <Container maxW="5xl" p={{ base: 4, sm: 10 }} >
                 <YourOffers rooms={RoomsOfCreator} />
-            </Container>
             </>
             )
 }
