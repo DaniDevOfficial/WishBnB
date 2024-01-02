@@ -85,18 +85,17 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
   } = useDisclosure({ defaultIsOpen: false });
   useEffect(() => {
     if (!searchInput) {
-      setFilteredPosts([]);
+      setFilteredPosts(rooms);
       return;
     }
 
     const search = searchInput.toLowerCase();
 
-    const filtered = posts.filter((post) => {
-      const title = post.title.toLowerCase();
+    const filtered = rooms.filter((room) => {
+      const title = room.title.toLowerCase();
 
       return title.includes(search);
     });
-
     setFilteredPosts(filtered);
   }, [searchInput]);
 
