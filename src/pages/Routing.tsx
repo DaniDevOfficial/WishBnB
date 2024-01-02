@@ -34,6 +34,7 @@ export function Routing() {
         const fetchData = async () => {
             try {
                 const data = await getAllDataInRoute("/rooms");
+                console.log(data);
                 setRooms(data);
             } catch (error) {
                 console.error(error);

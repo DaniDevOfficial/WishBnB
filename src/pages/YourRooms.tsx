@@ -6,13 +6,10 @@ import { Container } from '@chakra-ui/react';
 
 export function YourRooms({ rooms }: { rooms: Room[] }) {
     const auth = getAuth();
-    console.log(auth.currentUser?.uid);
-    console.log(rooms)
-    const RoomsOfCreator = rooms.filter(room => room.creatorID === auth.currentUser?.uid);
-    console.log(auth.currentUser?.uid);
+    const RoomsOfCreator =  rooms.filter(room => room.creatorID === auth.currentUser?.uid);
     return (
         <>
-                <YourOffers rooms={RoomsOfCreator} />
-            </>
-            )
+            <YourOffers rooms={RoomsOfCreator} />
+        </>
+    )
 }

@@ -9,7 +9,6 @@ export interface Room {
     longDescription: string;
     price: string;
     images: string[];
-    rating: Rating[];
     unavailableDates: { startDate: string; endDate: string }[];
     additionalFeatures: { name: string; pricePerNight: number }[];
 };

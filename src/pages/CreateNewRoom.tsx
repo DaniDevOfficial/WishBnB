@@ -87,9 +87,10 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                 images: imagesarray,
                 longDescription,
                 additionalFeatures,
-                creatorID,
                 creator: auth.currentUser?.displayName,
-            });
+                unavailableDates: [],
+                creatorID,
+            })
 
             console.log('Saved');
             onCreate();

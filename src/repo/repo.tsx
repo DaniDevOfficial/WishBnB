@@ -6,7 +6,9 @@ export async function getAllDataInRoute(path: string) {
 
   try {
     const snapshot = await get(dataRef);
-    return snapshot.val();
+    const data = snapshot.val();
+    const dataArray = Object.values(data);
+    return dataArray;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;
