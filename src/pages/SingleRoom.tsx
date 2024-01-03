@@ -17,10 +17,8 @@ export function SingleRoom({ rooms }: { rooms: Room[] }) {
 
     return (
         <>
-            <Container maxW="5xl" p={{ base: 4, sm: 10 }} >
                 <ImageDisplay slides={room.images} />
                 <DescriptionAndRent room={room} />
-            </Container>
         </>
     )
 }

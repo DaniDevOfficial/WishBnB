@@ -66,22 +66,24 @@ export function DescriptionAndRent({ room }: { room: Room }) {
                     <Marker position={center} />
                 </GoogleMap>
             </LoadScript>
-            {room.unavailableDates.length > 0 && (
-                <Box mt={4}>
-                    <Heading as="h3" size="md">
-                        Available Dates:
-                    </Heading>
-                    <Calendar
-                        tileDisabled={({ date }) =>
-                            room.unavailableDates.some(
-                                (dateRange) =>
-                                    new Date(date) >= new Date(dateRange.startDate) &&
-                                    new Date(date) <= new Date(dateRange.endDate)
-                            )
-                        }
-                    />
-                </Box>
-            )}
+            <Box mt={4}>
+                <Heading as="h3" size="md">
+                    Available Dates:
+                </Heading>
+                <Calendar
+                    tileDisabled={({ date }) =>
+                        room.unavailableDates &&
+                        room.unavailableDates.length > 0 &&
+                        room.unavailableDates.some(
+                            (dateRange) =>
+                                new Date(date) >= new Date(dateRange.startDate) &&
+                                new Date(date) <= new Date(dateRange.endDate)
+                        )
+                    }
+                />
+            </Box>
+
+
             <Button my={10} bgColor={useColorModeValue("primary.base", "primary.darkmode")} color={useColorModeValue("white", "black")} size="md" mb={4}>
                 Book Now
             </Button>

@@ -85,18 +85,17 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
   } = useDisclosure({ defaultIsOpen: false });
   useEffect(() => {
     if (!searchInput) {
-      setFilteredPosts([]);
+      setFilteredPosts(rooms);
       return;
     }
 
     const search = searchInput.toLowerCase();
 
-    const filtered = posts.filter((post) => {
-      const title = post.title.toLowerCase();
+    const filtered = rooms.filter((room) => {
+      const title = room.title.toLowerCase();
 
       return title.includes(search);
     });
-
     setFilteredPosts(filtered);
   }, [searchInput]);
 
@@ -140,6 +139,10 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
   }
   const [counter, setCounter] = useState(0);
   const [audio] = useState(new Audio(Sound));
+  function handlyeCapy() {
+    setCounter(counter + 1);
+    navigate("/");
+  }
   if (counter === 20) {
     audio.play(); // is kinda loud. Pay attention
     setCounter(0);
@@ -201,7 +204,8 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
         </ModalContent>
       </Modal>
       <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={GiCapybara} h={8} w={8} onClick={() => setCounter(counter + 1)} cursor={"pointer"} />
+        <Icon as={GiCapybara} h={8} w={8} onClick={handlyeCapy} cursor={"pointer"} _hover={{ bg: "transparent", transform: "scale(1.2)" }} transition="all .25s ease-in-out"/>
+
 
         <HStack spacing={8} alignItems="center">
           <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">
@@ -277,7 +281,7 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                       src={user!.photoURL ?? undefined}
                     />
                   </MenuButton>
-                  <MenuList bg="gray.100" paddingX={2} paddingY={2}>
+                  <MenuList bg="gray.100" paddingX={2} paddingY={2} zIndex={3}>
                     <Flex
                       justify={"space-between"}
                       align={"center"}
@@ -297,11 +301,10 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                     </Flex>
 
                     <AvatarMenuIcon
-                      isDisabled
                       onClick={() => navigate("/profile")}
                       marginBottom={2}
                     >
-                      <Tooltip label="Zurzeit nicht verfügbar">Profil</Tooltip>
+                      Profile
                     </AvatarMenuIcon>
                     {isAdmin && (
                       <AvatarMenuIcon
@@ -313,10 +316,10 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                     )}
                     {isCreator && (
                       <AvatarMenuIcon
-                        onClick={() => navigate("/YourRooms")}
+                        onClick={() => navigate("/Creator")}
                         marginBottom={2}
                       >
-                        Manage Rooms
+                        Manage Your Rooms
                       </AvatarMenuIcon>
                     )}
                     <AvatarMenuIcon onClick={() => auth.signOut()}>
