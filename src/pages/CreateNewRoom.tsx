@@ -16,6 +16,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] }) {
+    const navigate = useNavigate();
+
     let selectedRoom = null;
     let welcomeText = "Create A New Room"
     if (edit) {
@@ -23,6 +25,9 @@ export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] })
         const idToEdit = route[3]
         console.log(rooms)
         selectedRoom = rooms.find((room) => room.id === idToEdit)
+        if (selectedRoom.creatorID !== auth.currentUser?.uid) {
+            navigate("/Creator")
+        }
         welcomeText = "Edit Room"
     }
     const additionalFeaturesTmp = [
@@ -35,7 +40,6 @@ export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] })
             "pricePerNight": 20
         }
     ]
-    const navigate = useNavigate();
     const imagesarray = [];
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');

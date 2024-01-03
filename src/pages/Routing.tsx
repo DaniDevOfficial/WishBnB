@@ -16,6 +16,7 @@ import { YourRooms } from "./YourRooms";
 import { auth } from "../config/firebase";
 import { CreateNewOffer } from "./CreateNewOffer";
 import { CreateNewRoom } from "./CreateNewRoom";
+import { Admin } from "./Admin";
 
 
 
@@ -87,10 +88,23 @@ export function Routing() {
                     {hasAllowedRoleCreator ? (
                         <Route path="/Creator" element={<YourRooms rooms={rooms} />} />
                     ) : (
-                        <Route path="/Creator" element={<YourRooms rooms={rooms} />} />
+                        <Route path="/Creator" element={<HomePage rooms={rooms} />} />
                     )}
-                    <Route path="/Creator/Upload/NewRoom" element={<CreateNewRoom edit={false} rooms={rooms}/>} />
-                    <Route path="/Creator/update/:id" element={<CreateNewRoom edit={true} rooms={rooms}/>} />
+                    {hasAllowedRoleCreator ? (
+                        <Route path="/Creator/Upload/NewRoom" element={<CreateNewRoom edit={false} rooms={rooms} />} />
+                    ) : (
+                        <Route path="/Creator/Upload/NewRoom" element={<Navigate to="/" />} />
+                    )}
+                    {hasAllowedRoleCreator ? (
+                        <Route path="/Creator/update/:id" element={<CreateNewRoom edit={true} rooms={rooms} />} />
+                    ) : (
+                        <Route path="/Creator/update/:id" element={<Navigate to="/" />} />
+                    )}
+                    {hasAllowedRoleAdmin ? (
+                        <Route path="/Admin" element={<Admin />} />
+                    ) : (
+                        <Route path="/Admin" element={<Admin />} />
+                    )}
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Container>

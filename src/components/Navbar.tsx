@@ -281,7 +281,7 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                       src={user!.photoURL ?? undefined}
                     />
                   </MenuButton>
-                  <MenuList bg="gray.100" paddingX={2} paddingY={2}>
+                  <MenuList bg="gray.100" paddingX={2} paddingY={2} zIndex={3}>
                     <Flex
                       justify={"space-between"}
                       align={"center"}
