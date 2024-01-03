@@ -12,6 +12,7 @@ import { auth } from '../config/firebase';
 import { Flex, SkeletonText, Text, chakra, Heading, VStack, Form, Input, Button, FormControl, FormLabel, Textarea, HStack, IconButton, useColorModeValue, } from '@chakra-ui/react';
 import { Room } from '../types/Room';
 import { FaTrash } from 'react-icons/fa'; // Import trash icon for deleting features
+import { useNavigate } from 'react-router-dom';
 
 
 export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
@@ -25,6 +26,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
             "pricePerNight": 20
         }
     ]
+    const navigate = useNavigate();
     const imagesarray = [];
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');
@@ -93,7 +95,9 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
             })
 
             console.log('Saved');
+            navigate(`/room/${roomRef.key}`)
             onCreate();
+
         } catch (error) {
             console.error('Error Saving:', error);
         }
@@ -109,8 +113,8 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
         setImages([]);
         setLongDescription('');
         setAdditionalFeatures([]);
-
-
+        imagesarray.splice(0, imagesarray.length)
+        setImagesFile([]);
     }
 
     const handleAddFeature = () => {

@@ -1,15 +1,47 @@
-import { Box, Flex, Icon, useColorModeValue } from '@chakra-ui/react';
+import {
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogCloseButton,
+    Box, Flex, Icon, useColorModeValue, useDisclosure, Button
+    , useToast
+} from '@chakra-ui/react';
 import React from 'react';
 import { FaBed } from 'react-icons/fa';
 import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Room } from '../types/Room';
+import { database } from '../config/firebase';
+import { ref, set } from 'firebase/database';
 
 export function SingleOffer({ room }: { room: Room }) {
+    const toast = useToast()
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = React.useRef()
     function handleClick() {
         navigate(`/room/${room.id}`);
+    }
+    function handleEdit() {
+        navigate(`/Creator/Upload/${room.id}`);
+    }
+    async function handleDelete() {
+        const roomRef = ref(database, `rooms/${room.id}`);
+        await set(roomRef, null);
+        toast({
+            title: 'Room deleted',
+            description: `Your room with the id ${room.id} has been deleted.`,
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          })
+        
+
+        onClose()
     }
     return (
         <>
@@ -41,7 +73,7 @@ export function SingleOffer({ room }: { room: Room }) {
                     </Box>
                     <Box mx={4}>{room.title}</Box>
                     <Flex ml="auto">
-                        <Box
+                        <Button
                             display="flex"
                             alignItems="center"
                             justifyContent="center"
@@ -54,10 +86,9 @@ export function SingleOffer({ room }: { room: Room }) {
                             transition="transform 0.2s"
                             _hover={{ transform: 'scale(1.1)' }}
                             cursor={"pointer"}
-
                         >
                             <Icon as={CiEdit} />
-                        </Box>
+                        </Button>
                         <Box
                             display="flex"
                             alignItems="center"
@@ -71,6 +102,7 @@ export function SingleOffer({ room }: { room: Room }) {
                             transition="transform 0.2s"
                             _hover={{ transform: 'scale(1.1)' }}
                             cursor={"pointer"}
+                            onClick={onOpen}
 
                         >
                             <Icon as={MdDelete} />
@@ -78,6 +110,35 @@ export function SingleOffer({ room }: { room: Room }) {
                     </Flex>
                 </Flex>
             </Box>
+            <>
+
+
+                <AlertDialog
+                    isOpen={isOpen}
+                    onClose={onClose}
+                >
+                    <AlertDialogOverlay>
+                        <AlertDialogContent>
+                            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                                Delete Room with ID {room.id}
+                            </AlertDialogHeader>
+
+                            <AlertDialogBody>
+                                Are you sure? You can't undo this action afterwards.
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                                <Button ref={cancelRef} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button colorScheme='red' onClick={handleDelete} ml={3}>
+                                    Delete
+                                </Button>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialogOverlay>
+                </AlertDialog>
+            </>
         </>
     );
 }
