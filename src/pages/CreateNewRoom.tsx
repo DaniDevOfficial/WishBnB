@@ -15,7 +15,16 @@ import { FaTrash } from 'react-icons/fa'; // Import trash icon for deleting feat
 import { useNavigate } from 'react-router-dom';
 
 
-export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
+export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] }) {
+    let selectedRoom = null;
+    let welcomeText = "Create A New Room"
+    if (edit) {
+        const route = window.location.pathname.split('/')
+        const idToEdit = route[3]
+        console.log(rooms)
+        selectedRoom = rooms.find((room) => room.id === idToEdit)
+        welcomeText = "Edit Room"
+    }
     const additionalFeaturesTmp = [
         {
             "name": "Scuba Diving Experience",
@@ -58,9 +67,11 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
     }, [selectedRoom]);
 
     async function saveRoom() {
-        await uploadImages(imagesFile)
-        setImages(imagesarray)
-        console.log(images)
+        if (!edit) {
+            await uploadImages(imagesFile)
+
+        }
+
         if (!title || !description || !price || !location || !imagesarray || !longDescription || false) {
             console.error('Missing Fields');
             return;
@@ -76,23 +87,38 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
 
             if (selectedRoom) {
                 roomRef = ref(database, `rooms/${selectedRoom.id}`);
+                set(roomRef, {
+                    id: selectedRoom?.id || roomRef.key,
+                    title,
+                    description,
+                    price,
+                    location,
+                    images: images,
+                    longDescription,
+                    additionalFeatures,
+                    creator: auth.currentUser?.displayName,
+                    unavailableDates: [],
+                    creatorID,
+                })
+                console.log("update")
             } else {
                 roomRef = push(ref(database, 'rooms'));
+                set(roomRef, {
+                    id: roomRef.key,
+                    title,
+                    description,
+                    price,
+                    location,
+                    images: imagesarray,
+                    longDescription,
+                    additionalFeatures,
+                    creator: auth.currentUser?.displayName,
+                    unavailableDates: [],
+                    creatorID,
+                })
             }
 
-            set(roomRef, {
-                id: selectedRoom?.id || roomRef.key,
-                title,
-                description,
-                price,
-                location,
-                images: imagesarray,
-                longDescription,
-                additionalFeatures,
-                creator: auth.currentUser?.displayName,
-                unavailableDates: [],
-                creatorID,
-            })
+
 
             console.log('Saved');
             navigate(`/room/${roomRef.key}`)
@@ -168,7 +194,7 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
 
     return (
         <Flex alignItems="center" w="100%" direction="column">
-            <Heading mb="4" onClick={handleclick}>Create A New Room</Heading>
+            <Heading mb="4" onClick={handleclick}>{welcomeText}</Heading>
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -253,30 +279,32 @@ export function CreateNewRoom({ selectedRoom }: { selectedRoom: Room | null }) {
                         Add Feature
                     </Button>
                 </FormControl>
-                <FormControl mb="4" isRequired>
-                    <FormLabel>Room Images</FormLabel>
-                    <VStack spacing="2">
-                        {imagesFile.map((image, index) => (
-                            <HStack key={index} spacing="2">
-                                <Text>{index === 0 ? 'Cover Image' : `Image ${index + 1}:`} </Text>
-                                <SkeletonText isLoaded={true}>
-                                    <chakra.img
-                                        src={URL.createObjectURL(image)}
-                                        alt={`Room ${index + 1}`}
-                                        maxW="200px"
-                                        maxH="200px"
+                {edit ? null : (
+                    <FormControl mb="4" isRequired>
+                        <FormLabel>Room Images</FormLabel>
+                        <VStack spacing="2">
+                            {imagesFile.map((image, index) => (
+                                <HStack key={index} spacing="2">
+                                    <Text>{index === 0 ? 'Cover Image' : `Image ${index + 1}:`} </Text>
+                                    <SkeletonText isLoaded={true}>
+                                        <chakra.img
+                                            src={URL.createObjectURL(image)}
+                                            alt={`Room ${index + 1}`}
+                                            maxW="200px"
+                                            maxH="200px"
+                                        />
+                                    </SkeletonText>
+                                    <IconButton
+                                        icon={<FaTrash />}
+                                        aria-label="Delete Image"
+                                        onClick={() => handleRemoveImage(index)}
                                     />
-                                </SkeletonText>
-                                <IconButton
-                                    icon={<FaTrash />}
-                                    aria-label="Delete Image"
-                                    onClick={() => handleRemoveImage(index)}
-                                />
-                            </HStack>
-                        ))}
-                    </VStack>
-                    <Input type="file" accept="image/*" onChange={addImage} mt="2" />
-                </FormControl>
+                                </HStack>
+                            ))}
+                        </VStack>
+                        <Input type="file" accept="image/*" onChange={addImage} mt="2" />
+                    </FormControl>
+                )}
                 <Button bgColor={useColorModeValue('accent.base', 'accent.darkmode')} type="submit">
                     Save Room
                 </Button>

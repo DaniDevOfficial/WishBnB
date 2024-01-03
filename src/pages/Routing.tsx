@@ -23,12 +23,14 @@ export function Routing() {
     const { toggleColorMode, colorMode } = useColorMode();
     const [hasAllowedRoleCreator, setHasAllowedRoleCreator] = useState(false);
     const [hasAllowedRoleAdmin, setHasAllowedRoleAdmin] = useState(false);
+    const [roomToEdit, setRoomToEdit] = useState(null);
     const allowedRolesCreator = ["creator", "admin"];
     const allowedRolesAdmin = ["admin"];
     const pathname = useLocation();
     const [rooms, setRooms] = useState([]);
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log(roomToEdit)
     }, [pathname]);
     useEffect(() => {
         const fetchData = async () => {
@@ -87,7 +89,8 @@ export function Routing() {
                     ) : (
                         <Route path="/Creator" element={<YourRooms rooms={rooms} />} />
                     )}
-                    <Route path="/Creator/Upload/NewRoom" element={<CreateNewRoom selectedRoom={null} />} />
+                    <Route path="/Creator/Upload/NewRoom" element={<CreateNewRoom edit={false} rooms={rooms}/>} />
+                    <Route path="/Creator/update/:id" element={<CreateNewRoom edit={true} rooms={rooms}/>} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Container>

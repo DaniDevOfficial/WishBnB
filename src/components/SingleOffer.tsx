@@ -9,7 +9,7 @@ import {
     Box, Flex, Icon, useColorModeValue, useDisclosure, Button
     , useToast
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaBed } from 'react-icons/fa';
 import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
@@ -23,11 +23,12 @@ export function SingleOffer({ room }: { room: Room }) {
     const navigate = useNavigate();
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
+    const [currentRoom, setCurrentRoom] = useState<Room | null>(null); // State to keep track of the currently selected room
     function handleClick() {
         navigate(`/room/${room.id}`);
     }
     function handleEdit() {
-        navigate(`/Creator/Upload/${room.id}`);
+        navigate(`/Creator/update/${room.id}`);
     }
     async function handleDelete() {
         const roomRef = ref(database, `rooms/${room.id}`);
@@ -86,6 +87,7 @@ export function SingleOffer({ room }: { room: Room }) {
                             transition="transform 0.2s"
                             _hover={{ transform: 'scale(1.1)' }}
                             cursor={"pointer"}
+                            onClick={handleEdit} 
                         >
                             <Icon as={CiEdit} />
                         </Button>

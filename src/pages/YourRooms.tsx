@@ -9,7 +9,7 @@ export function YourRooms({ rooms }: { rooms: Room[] }) {
     const RoomsOfCreator =  rooms.filter(room => room.creatorID === auth.currentUser?.uid);
     return (
         <>
-            <YourOffers rooms={RoomsOfCreator} />
+            <YourOffers rooms={RoomsOfCreator}/>
         </>
     )
 }
