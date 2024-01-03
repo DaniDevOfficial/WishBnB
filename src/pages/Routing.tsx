@@ -17,6 +17,7 @@ import { auth } from "../config/firebase";
 import { CreateNewOffer } from "./CreateNewOffer";
 import { CreateNewRoom } from "./CreateNewRoom";
 import { Admin } from "./Admin";
+import { User } from "firebase/auth";
 
 
 
@@ -25,6 +26,7 @@ export function Routing() {
     const [hasAllowedRoleCreator, setHasAllowedRoleCreator] = useState(false);
     const [hasAllowedRoleAdmin, setHasAllowedRoleAdmin] = useState(false);
     const [roomToEdit, setRoomToEdit] = useState(null);
+    const [user, setUser] = useState<User | null>(null);
     const allowedRolesCreator = ["creator", "admin"];
     const allowedRolesAdmin = ["admin"];
     const pathname = useLocation();
@@ -47,10 +49,10 @@ export function Routing() {
         fetchData();
     }, []);
 
-
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             const userId = user?.uid;
+            setUser(user);
             if (!userId) return (
                 setHasAllowedRoleCreator(false),
                 setHasAllowedRoleAdmin(false)
@@ -103,7 +105,12 @@ export function Routing() {
                     {hasAllowedRoleAdmin ? (
                         <Route path="/Admin" element={<Admin />} />
                     ) : (
-                        <Route path="/Admin" element={<Admin />} />
+                        <Route path="/Admin" element={<Navigate to="/" />} />
+                    )}
+                    {user ? (
+                        <Route path="/profile" element={<Button>Hey</Button>} />
+                    ) : (
+                        <Route path="/profile" element={<Navigate to="/" />} />
                     )}
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

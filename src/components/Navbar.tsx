@@ -301,11 +301,10 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
                     </Flex>
 
                     <AvatarMenuIcon
-                      isDisabled
                       onClick={() => navigate("/profile")}
                       marginBottom={2}
                     >
-                      <Tooltip label="Zurzeit nicht verfügbar">Profil</Tooltip>
+                      Profile
                     </AvatarMenuIcon>
                     {isAdmin && (
                       <AvatarMenuIcon
