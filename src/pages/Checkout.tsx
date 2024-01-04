@@ -60,32 +60,35 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
             return;
         }
         setNightAmount(datesBetween.length - 1);
+        if (roomToPayFor.unavailableDates) {
+            console.log(' dates');
+            datesBetween.forEach(dateBetween => {
+                const formattedDate = dateBetween.toDateString();
+                console.log('Selected Date:', formattedDate);
 
-        datesBetween.forEach(dateBetween => {
-            const formattedDate = dateBetween.toDateString();
-            console.log('Selected Date:', formattedDate);
+                const overlapUnavailable = roomToPayFor.unavailableDates.some(dateRange =>
+                    dateBetween >= new Date(dateRange.startDate) && dateBetween <= new Date(dateRange.endDate)
+                );
 
-            const overlapUnavailable = roomToPayFor.unavailableDates.some(dateRange =>
-                dateBetween >= new Date(dateRange.startDate) && dateBetween <= new Date(dateRange.endDate)
-            );
+                if (overlapUnavailable && !checkForMultipleToasts) {
+                    checkIfError = true;
+                    checkForMultipleToasts = true;
+                    toast({
+                        title: 'Invalid Date Range',
+                        description: 'Please select available dates.',
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                    });
 
-            if (overlapUnavailable && !checkForMultipleToasts) {
-                checkIfError = true;
-                checkForMultipleToasts = true;
-                toast({
-                    title: 'Invalid Date Range',
-                    description: 'Please select available dates.',
-                    status: 'error',
-                    duration: 5000,
-                    isClosable: true,
-                });
-
-                // Reset selected dates
-                setSelectedDates([]);
-                return;
-            }
-        });
-
+                    // Reset selected dates
+                    setSelectedDates([]);
+                    return;
+                }
+            });
+        } else {
+            setSelectedDates(Array.isArray(date) ? date : [date]);
+        }
         // Set selected dates only if there are no overlapping dates or same start and end dates
         if (!checkIfError) {
             setSelectedDates(Array.isArray(date) ? date : [date]);
@@ -153,7 +156,7 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
                 </Text>
             </Box>
 
-            <Heading as="h4" mt={10}>Total Price Per Night: {totalPrice} CHF</Heading>
+            <Heading as="h4" mt={10}>Total Price: {totalPrice * nightAmout} CHF</Heading>
         </>
     )
 }
