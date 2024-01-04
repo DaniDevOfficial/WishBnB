@@ -18,6 +18,7 @@ import { CreateNewOffer } from "./CreateNewOffer";
 import { CreateNewRoom } from "./CreateNewRoom";
 import { Admin } from "./Admin";
 import { User } from "firebase/auth";
+import { Checkout } from "./Checkout";
 
 
 
@@ -111,6 +112,11 @@ export function Routing() {
                         <Route path="/profile" element={<Button>Hey</Button>} />
                     ) : (
                         <Route path="/profile" element={<Navigate to="/" />} />
+                    )}
+                    {user ? (   
+                        <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
+                    ) : (
+                        <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
                     )}
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
