@@ -13,7 +13,7 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
     const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
     const [selectedDates, setSelectedDates] = useState<Date[]>([]);
     const [totalPrice, setTotalPrice] = useState(roomToPayFor.price);
-
+    const [nightAmout, setNightAmount] = useState(0);
     useEffect(() => {
         // Calculate the total price based on selected features
         const additionalFeaturesTotal = selectedFeatures.reduce(
@@ -35,17 +35,32 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
     };
 
     const handleDateChange = (date: Date | Date[]) => {
+        let checkForMultipleToasts = false;
         let checkIfError = false;
         const startDate = Array.isArray(date) ? date[0] : date;
         const endDate = Array.isArray(date) ? date[date.length - 1] : date;
         console.log('Start Date:', startDate);
         console.log('End Date:', endDate);
+
         if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
             return;
         }
 
         const datesBetween = getDates(startDate, endDate);
-        console.log('Dates between:', datesBetween);
+        if (datesBetween.length <= 1) {
+            toast({
+                title: 'Invalid Date Range',
+                description: 'Start and end dates cannot be the same.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+
+            setSelectedDates([]);
+            return;
+        }
+        setNightAmount(datesBetween.length - 1);
+
         datesBetween.forEach(dateBetween => {
             const formattedDate = dateBetween.toDateString();
             console.log('Selected Date:', formattedDate);
@@ -54,8 +69,9 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
                 dateBetween >= new Date(dateRange.startDate) && dateBetween <= new Date(dateRange.endDate)
             );
 
-            if (overlapUnavailable && !checkIfError) {
+            if (overlapUnavailable && !checkForMultipleToasts) {
                 checkIfError = true;
+                checkForMultipleToasts = true;
                 toast({
                     title: 'Invalid Date Range',
                     description: 'Please select available dates.',
@@ -69,7 +85,14 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
                 return;
             }
         });
+
+        // Set selected dates only if there are no overlapping dates or same start and end dates
+        if (!checkIfError) {
+            setSelectedDates(Array.isArray(date) ? date : [date]);
+        }
     };
+
+
 
     const tileDisabled = ({ date, view }: { date: Date, view: string }) => {
         return (
@@ -126,6 +149,7 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
                     {selectedDates.map((date, index) => (
                         <span key={index}>{date.toDateString()}, </span>
                     ))}
+                    This is {nightAmout} nights
                 </Text>
             </Box>
 
