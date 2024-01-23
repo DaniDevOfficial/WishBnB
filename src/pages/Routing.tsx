@@ -19,6 +19,7 @@ import { CreateNewRoom } from "./CreateNewRoom";
 import { Admin } from "./Admin";
 import { User } from "firebase/auth";
 import { Checkout } from "./Checkout";
+import { AllRooms } from "./AllRooms";
 
 
 
@@ -66,8 +67,7 @@ export function Routing() {
                     const hasAllowedRoleCreator = checkRoles(userRoles, allowedRolesCreator);
                     setHasAllowedRoleCreator(hasAllowedRoleCreator);
                     setHasAllowedRoleAdmin(hasAllowedRoleAdmin);
-                    console.log(hasAllowedRoleCreator);
-                    console.log(hasAllowedRoleAdmin);
+
                 })
                 .catch((error) => {
                     console.error(error);
@@ -118,6 +118,7 @@ export function Routing() {
                     ) : (
                         <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
                     )}
+                    <Route path="rooms" element={<AllRooms rooms={rooms} />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Container>

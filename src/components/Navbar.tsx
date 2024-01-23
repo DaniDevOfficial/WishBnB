@@ -341,8 +341,13 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
       {isOpen ? (
         <Box pb={4} display={{ base: 'inherit', md: 'none' }}>
           <Stack as="nav" spacing={2}>
+            wasd
             {navLinks.map((link, index) => (
-              <NavLink key={index} {...link} onClose={onClose} />
+              <>
+              <Link onClick={() => navigate(`${link.path}`)} _hover={{ textDecoration: 'none', color: 'accent.400' }}>
+                  <Text>{link.name}</Text>
+              </Link>
+              </>
             ))}
             <Text fontWeight="semibold" color="gray.500">
               Community
