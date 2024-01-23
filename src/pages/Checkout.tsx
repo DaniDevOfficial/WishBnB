@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Room } from '../types/Room'
-import { Heading, Checkbox, Box, Text, useToast } from '@chakra-ui/react'
+import { Heading, Checkbox, Box, Text, useToast, Button } from '@chakra-ui/react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
@@ -141,6 +141,7 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
                     value={selectedDates}
                     selectRange={true}
                     tileDisabled={tileDisabled}
+                    minDate={new Date()}
                 />
             </Box>
 
@@ -148,19 +149,21 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
                 <Heading as="h3" size="md">
                     Picked Dates:
                 </Heading>
-                <Text>
-                    {selectedDates.map((date, index) => (
-                        <span key={index}>{date.toDateString()}, </span>
-                    ))}
-                    This is {nightAmout} nights
-                </Text>
+                {selectedDates && (
+                    <Text>
+                        This is {nightAmout} nights
+                    </Text>
+                )}
             </Box>
 
             <Heading as="h4" mt={10}>Total Price: {totalPrice * nightAmout} CHF</Heading>
+            <Button mt={10}  size="lg" isDisabled={selectedDates.length == 0}>
+                Pay with Stripe Now
+            </Button>
         </>
     )
 }
-function getDates(startDate, endDate) {
+function getDates(startDate: String, endDate: String) {
     const dates = [];
     let currentDate = new Date(startDate);
 
