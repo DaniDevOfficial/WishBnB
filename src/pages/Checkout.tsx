@@ -3,6 +3,8 @@ import { Room } from '../types/Room'
 import { Heading, Checkbox, Box, Text, useToast, Button } from '@chakra-ui/react'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { set } from 'firebase/database';
 
 export function Checkout({ rooms }: { rooms: Room[] }) {
     const route = window.location.pathname.split('/')
@@ -22,7 +24,16 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
         );
         setTotalPrice(Number(roomToPayFor.price) + additionalFeaturesTotal);
     }, [selectedFeatures, roomToPayFor]);
+    const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
+    const handleCaptchaVerify = () => {
+        if (isCaptchaVerified) setIsCaptchaVerified(false);
+        else
+        {
+            setIsCaptchaVerified(true);
+        }
+
+    };
     const handleFeatureToggle = (featureIndex: string) => {
         // Toggle the selected features
         setSelectedFeatures((prevSelectedFeatures) => {
@@ -110,6 +121,28 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
         );
     };
 
+    console.log(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
+    const handlePayWithStripe = () => {
+        if (isCaptchaVerified) {
+
+            toast({
+                title: 'Payment Successful',
+                description: 'Thank you for your payment!',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+            });
+        } else {
+            toast({
+                title: 'CAPTCHA Verification Failed',
+                description: 'Please verify that you are not a robot.',
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+        }
+    };
+
     return (
         <>
             <Heading>Checkout</Heading>
@@ -157,7 +190,18 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
             </Box>
 
             <Heading as="h4" mt={10}>Total Price: {totalPrice * nightAmout} CHF</Heading>
-            <Button mt={10}  size="lg" isDisabled={selectedDates.length == 0}>
+            <Box mt={10}>
+                <ReCAPTCHA
+                    sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY} // Replace with your actual reCAPTCHA site key
+                    onChange={handleCaptchaVerify}
+                />
+            </Box>
+            <Button
+                mt={10}
+                size="lg"
+                isDisabled={selectedDates.length === 0 || !isCaptchaVerified}
+                onClick={handlePayWithStripe}
+            >
                 Pay with Stripe Now
             </Button>
         </>
@@ -175,5 +219,4 @@ function getDates(startDate: String, endDate: String) {
     return dates;
 }
 
-// Example usage:
 

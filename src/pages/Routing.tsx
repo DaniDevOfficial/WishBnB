@@ -35,13 +35,11 @@ export function Routing() {
     const [rooms, setRooms] = useState([]);
     useEffect(() => {
         window.scrollTo(0, 0);
-        console.log(roomToEdit)
     }, [pathname]);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getAllDataInRoute("/rooms");
-                console.log(data);
                 setRooms(data);
             } catch (error) {
                 console.error(error);
