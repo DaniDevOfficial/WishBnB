@@ -62,8 +62,8 @@ export function PaymentForm() {
             }
             let roomRef;
             let roomRentalRef;
-        
-            roomRef = ref(database, `rooms/${roomToPayFor.id}`);
+
+            roomRef = ref(database, `rooms/${roomToPayFor.id}/unavailableDates`);
             roomRentalRef = ref(database, `roomRentals`);
 
             const roomRental = {
@@ -77,17 +77,17 @@ export function PaymentForm() {
             };
             roomRentalRef = push(ref(database, `roomRentals`));
             set(roomRentalRef, roomRental)
+
+
             const newUnavailableDates = [
-                ...roomToPayFor.unavailableDates,
+                ...roomToPayFor.unavailableDates || [],
                 {
                     startDate: selectedDates[0].toISOString().split('T')[0],
                     endDate: selectedDates[1].toISOString().split('T')[0],
                 },
             ];
-    
-            update(roomRef, {
-                unavailableDates: newUnavailableDates,
-            });
+
+            set(roomRef,  newUnavailableDates);
 
         } catch (error) {
             console.error(error);
