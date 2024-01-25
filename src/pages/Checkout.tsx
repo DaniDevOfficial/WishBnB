@@ -5,6 +5,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { set } from 'firebase/database';
+import { useNavigate } from 'react-router-dom';
 
 export function Checkout({ rooms }: { rooms: Room[] }) {
     const route = window.location.pathname.split('/')
@@ -16,6 +17,7 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
     const [selectedDates, setSelectedDates] = useState<Date[]>([]);
     const [totalPrice, setTotalPrice] = useState(roomToPayFor.price);
     const [nightAmout, setNightAmount] = useState(0);
+    const navigate = useNavigate();
     useEffect(() => {
         // Calculate the total price based on selected features
         const additionalFeaturesTotal = selectedFeatures.reduce(
@@ -121,17 +123,9 @@ export function Checkout({ rooms }: { rooms: Room[] }) {
         );
     };
 
-    console.log(import.meta.env.VITE_RECAPTCHA_SITE_KEY)
     const handlePayWithStripe = () => {
         if (isCaptchaVerified) {
-
-            toast({
-                title: 'Payment Successful',
-                description: 'Thank you for your payment!',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-            });
+            navigate(`/room/payment/${idToPayFor}`, { state: { roomToPayFor, selectedDates, selectedFeatures, totalPrice } });
         } else {
             toast({
                 title: 'CAPTCHA Verification Failed',

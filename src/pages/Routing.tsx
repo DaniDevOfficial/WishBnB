@@ -20,6 +20,7 @@ import { Admin } from "./Admin";
 import { User } from "firebase/auth";
 import { Checkout } from "./Checkout";
 import { AllRooms } from "./AllRooms";
+import { Payment } from "./Payment";
 
 
 
@@ -111,10 +112,15 @@ export function Routing() {
                     ) : (
                         <Route path="/profile" element={<Navigate to="/" />} />
                     )}
-                    {user ? (   
+                    {user ? (
                         <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
                     ) : (
                         <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
+                    )}
+                    {user ? (
+                        <Route path="/room/payment/:id" element={<Payment />} />
+                    ) : (
+                        <Route path="/room/payment/:id" element={<Payment />} />
                     )}
                     <Route path="rooms" element={<AllRooms rooms={rooms} />} />
                     <Route path="*" element={<Navigate to="/" />} />
