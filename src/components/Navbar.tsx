@@ -204,13 +204,17 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
         </ModalContent>
       </Modal>
       <Flex h={16} alignItems="center" justifyContent="space-between" mx="auto">
-        <Icon as={GiCapybara} h={8} w={8} onClick={handlyeCapy} cursor={"pointer"} _hover={{ bg: "transparent", transform: "scale(1.2)" }} transition="all .25s ease-in-out"/>
+        <Icon as={GiCapybara} h={8} w={8} onClick={handlyeCapy} cursor={"pointer"} _hover={{ bg: "transparent", transform: "scale(1.2)" }} transition="all .25s ease-in-out" />
 
 
         <HStack spacing={8} alignItems="center">
           <HStack as="nav" spacing={6} display={{ base: 'none', md: 'flex' }} alignItems="center">
             {navLinks.map((link, index) => (
-              <NavLink key={index} {...link} onClose={onClose} />
+              <>
+                <Link onClick={() => navigate(`${link.path}`)} _hover={{ textDecoration: 'none', color: 'accent.400' }}>
+                  <Text>{link.name}</Text>
+                </Link>
+              </>
             ))}
 
             {/* Dropdown Menu */}
@@ -342,7 +346,11 @@ export function Navbar({ rooms }: { rooms: Room[] }) {
         <Box pb={4} display={{ base: 'inherit', md: 'none' }}>
           <Stack as="nav" spacing={2}>
             {navLinks.map((link, index) => (
-              <NavLink key={index} {...link} onClose={onClose} />
+              <>
+                <Link onClick={() => navigate(`${link.path}`)} _hover={{ textDecoration: 'none', color: 'accent.400' }}>
+                  <Text>{link.name}</Text>
+                </Link>
+              </>
             ))}
             <Text fontWeight="semibold" color="gray.500">
               Community

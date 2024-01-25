@@ -18,6 +18,10 @@ import { CreateNewOffer } from "./CreateNewOffer";
 import { CreateNewRoom } from "./CreateNewRoom";
 import { Admin } from "./Admin";
 import { User } from "firebase/auth";
+import { Checkout } from "./Checkout";
+import { AllRooms } from "./AllRooms";
+import { Payment } from "./Payment";
+import { Profile } from "./Profile";
 
 
 
@@ -33,13 +37,11 @@ export function Routing() {
     const [rooms, setRooms] = useState([]);
     useEffect(() => {
         window.scrollTo(0, 0);
-        console.log(roomToEdit)
     }, [pathname]);
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getAllDataInRoute("/rooms");
-                console.log(data);
                 setRooms(data);
             } catch (error) {
                 console.error(error);
@@ -65,8 +67,7 @@ export function Routing() {
                     const hasAllowedRoleCreator = checkRoles(userRoles, allowedRolesCreator);
                     setHasAllowedRoleCreator(hasAllowedRoleCreator);
                     setHasAllowedRoleAdmin(hasAllowedRoleAdmin);
-                    console.log(hasAllowedRoleCreator);
-                    console.log(hasAllowedRoleAdmin);
+
                 })
                 .catch((error) => {
                     console.error(error);
@@ -108,10 +109,21 @@ export function Routing() {
                         <Route path="/Admin" element={<Navigate to="/" />} />
                     )}
                     {user ? (
-                        <Route path="/profile" element={<Button>Hey</Button>} />
+                        <Route path="/profile" element={<Profile />} />
                     ) : (
                         <Route path="/profile" element={<Navigate to="/" />} />
                     )}
+                    {user ? (
+                        <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
+                    ) : (
+                        <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
+                    )}
+                    {user ? (
+                        <Route path="/room/payment/:id" element={<Payment />} />
+                    ) : (
+                        <Route path="/room/payment/:id" element={<Payment />} />
+                    )}
+                    <Route path="rooms" element={<AllRooms rooms={rooms} />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Container>

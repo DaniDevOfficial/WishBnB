@@ -7,8 +7,10 @@ import 'react-calendar/dist/Calendar.css';
 import './RoomDetailsComponent.css';
 import { getAllDataInRoute } from '../../repo/repo';
 import { Room } from '../../types/Room';
+import { useNavigate } from 'react-router-dom';
 
 export function DescriptionAndRent({ room }: { room: Room }) {
+    const navigate = useNavigate();
     const mapContainerStyle = {
         width: '100%',
         height: '300px',
@@ -84,7 +86,7 @@ export function DescriptionAndRent({ room }: { room: Room }) {
             </Box>
 
 
-            <Button my={10} bgColor={useColorModeValue("primary.base", "primary.darkmode")} color={useColorModeValue("white", "black")} size="md" mb={4}>
+            <Button my={10} bgColor={useColorModeValue("primary.base", "primary.darkmode")} color={useColorModeValue("white", "black")} size="md" mb={4} onClick={(() => navigate(`/room/checkout/${room.id}`))}>
                 Book Now
             </Button>
 
@@ -96,9 +98,7 @@ export function DescriptionAndRent({ room }: { room: Room }) {
                 <Text>Location 2</Text>
                 <Text>Location 3</Text>
             </Stack>
-            <Button onClick={fetchData}>
-                This is for testing purposes only
-            </Button>
+
         </Box>
     );
 }

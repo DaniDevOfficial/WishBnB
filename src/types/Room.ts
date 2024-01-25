@@ -7,7 +7,7 @@ export interface Room {
     creator: string;
     creatorID: string;
     longDescription: string;
-    price: string;
+    price: number;
     images: string[];
     unavailableDates: { startDate: string; endDate: string }[];
     additionalFeatures: { name: string; pricePerNight: number }[];
