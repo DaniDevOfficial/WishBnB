@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Box, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react'
 import { getDataInRouteByUserID } from '../repo/repo'
@@ -50,13 +50,22 @@ export function Profile() {
                         px={4}
                         py={2}
                     >
-                        <Flex alignItems="center">
-                            <Text fontSize="2xl" fontWeight="bold">
-                                {rentals.totalPrice}
+                        <Text fontSize="2xl" fontWeight="bold">
+                            {rentals.title}
+                        </Text>
+                        <Flex alignItems="center" flexDirection={"column"} ml={4}>
+                            <Text fontSize="sm" >
+                                StartDate: {rentals.startDate.split('T')[0]}
+                            </Text>
+                            <Text fontSize="sm" mx={2}>
+                                EndDate: {rentals.endDate.split('T')[0]}
                             </Text>
                         </Flex>
-
+                        <Text>
+                            Total Cost: {rentals.totalPrice}.00 CHF
+                        </Text>
                     </Flex>
+
                 </Box>
             ))
             }

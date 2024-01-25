@@ -21,6 +21,7 @@ const PrivacyPolicy = () => {
       <Text mt="2">
         <strong>Other Information</strong>
         <br />- <em>Uploaded Rooms:</em> When you upload rooms on our website, we may collect information about these rooms, including text, images, and metadata.
+        <br />- <em>Created Rentals:</em> When you create a rental on our website, we may collect information about these rentals like text, paymentinfo and dates.
       </Text>
 
       <Heading mt="4" mb="2" size="md">

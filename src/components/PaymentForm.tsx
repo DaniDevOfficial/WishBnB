@@ -73,6 +73,7 @@ export function PaymentForm() {
                 endDate: selectedDates[1].toISOString(),
                 selectedFeatures: selectedFeatures.map((feature) => roomToPayFor.additionalFeatures[feature].name),
                 totalPrice,
+                title: roomToPayFor.title,
                 createdAt: new Date(),
             };
             roomRentalRef = push(ref(database, `roomRentals`));
