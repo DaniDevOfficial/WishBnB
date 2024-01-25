@@ -22,6 +22,8 @@ import { Checkout } from "./Checkout";
 import { AllRooms } from "./AllRooms";
 import { Payment } from "./Payment";
 import { Profile } from "./Profile";
+import { AboutUs } from "./AboutUs";
+import PrivacyPolicy from "./PrivacyPolicy";
 
 
 
@@ -124,6 +126,8 @@ export function Routing() {
                         <Route path="/room/payment/:id" element={<Payment />} />
                     )}
                     <Route path="rooms" element={<AllRooms rooms={rooms} />} />
+                    <Route path="/about" element={<AboutUs />} />
+                    <Route path="/privacy" element={<PrivacyPolicy />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </Container>

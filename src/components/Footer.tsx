@@ -10,6 +10,7 @@ import {
     Button,
     LinkProps
   } from '@chakra-ui/react';
+  import { Link as RouterLink } from 'react-router-dom';
   // Here we have used react-icons package for the icons
   import { FaGithub } from 'react-icons/fa';
   
@@ -37,7 +38,7 @@ import {
                 About
               </Text>
               <VStack spacing={2} alignItems="flex-start" color="gray.500">
-                <CustomLink>Contrinute</CustomLink>
+                <RouterLink to={"/privacy"}>Contrinute</RouterLink>
                 <CustomLink>Media assets</CustomLink>
                 <CustomLink>Changelog</CustomLink>
                 <CustomLink>Releases</CustomLink>
@@ -48,7 +49,7 @@ import {
                 Community
               </Text>
               <VStack spacing={2} alignItems="flex-start" color="gray.500">
-                <CustomLink>Chat on Discord</CustomLink>
+                <RouterLink to={"https://wishchatprog2.web.app/"}>Chat on WishChat</RouterLink>
                 <CustomLink>Follow on Twitter</CustomLink>
                 <CustomLink>Follow on Github</CustomLink>
                 <CustomLink>Github discussions</CustomLink>
@@ -59,7 +60,7 @@ import {
                 Project
               </Text>
               <VStack spacing={2} alignItems="flex-start" color="gray.500">
-                <CustomLink>TemplatesKart</CustomLink>
+                <CustomLink>IDK</CustomLink>
                 <CustomLink>Documentation</CustomLink>
                 <CustomLink>Github organization</CustomLink>
                 <CustomLink>npm organization</CustomLink>
