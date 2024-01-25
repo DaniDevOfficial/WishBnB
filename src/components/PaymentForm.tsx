@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useToast, Box, Heading, Button, FormControl, FormLabel, FormErrorMessage, Text } from '@chakra-ui/react';
+import { auth, database } from '../config/firebase';
+import { push, ref, set, update } from 'firebase/database';
 
 export function PaymentForm() {
     const stripe = useStripe();
@@ -46,14 +48,55 @@ export function PaymentForm() {
             console.error(error);
             setPaymentError(error.message);
         } else {
+            handleSavingRoomRental();
             setPaymentSuccess(true);
         }
     };
 
+    async function handleSavingRoomRental() {
+        try {
+            const userID = auth.currentUser.uid;
+            if (!userID) {
+                navigate('/');
+                return
+            }
+            let roomRef;
+            let roomRentalRef;
+        
+            roomRef = ref(database, `rooms/${roomToPayFor.id}`);
+            roomRentalRef = ref(database, `roomRentals`);
+
+            const roomRental = {
+                userID,
+                roomID: roomToPayFor.id,
+                startDate: selectedDates[0].toISOString(),
+                endDate: selectedDates[1].toISOString(),
+                selectedFeatures: selectedFeatures.map((feature) => roomToPayFor.additionalFeatures[feature].name),
+                totalPrice,
+                createdAt: new Date(),
+            };
+            roomRentalRef = push(ref(database, `roomRentals`));
+            set(roomRentalRef, roomRental)
+            const newUnavailableDates = [
+                ...roomToPayFor.unavailableDates,
+                {
+                    startDate: selectedDates[0].toISOString().split('T')[0],
+                    endDate: selectedDates[1].toISOString().split('T')[0],
+                },
+            ];
+    
+            update(roomRef, {
+                unavailableDates: newUnavailableDates,
+            });
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
         <Box maxW="600px" mx="auto" textAlign="center" p="4">
             <Heading as="h2" mb="4">
-                Payment Information for: {roomToPayFor.title}    
+                Payment Information for: {roomToPayFor.title}
             </Heading>
             <Text mb="4">
                 Total Price: {totalPrice} CHF

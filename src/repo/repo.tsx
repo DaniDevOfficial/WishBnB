@@ -14,6 +14,50 @@ export async function getAllDataInRoute(path: string) {
     throw error;
   }
 }
+
+export async function getDataInRouteByCreatorID(path: string, id: string) {
+  const dataRef = ref(database, path);
+
+  try {
+    const snapshot = await get(dataRef);
+    const data = snapshot.val();
+    const dataArray = Object.values(data);
+    const filteredData = dataArray.filter((item) => item.creatorID === id);
+    return filteredData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+export async function getDataInRouteByUserID(path: string, id: string) {
+  const dataRef = ref(database, path);
+
+  try {
+    const snapshot = await get(dataRef);
+    const data = snapshot.val();
+    const dataArray = Object.values(data);
+    const filteredData = dataArray.filter((item) => item.userID === id);
+    return filteredData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+export async function getDataInRouteByRoomID(path: string, id: string) {
+  const dataRef = ref(database, path);
+
+  try {
+    const snapshot = await get(dataRef);
+    const data = snapshot.val();
+    const dataArray = Object.values(data);
+    const filteredData = dataArray.filter((item) => item.roomID === id);
+    return filteredData;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
+}
+
 export async function checkIfCreator(userID: string) {
   const dataRef = ref(database, 'roles/creators');
   try {
