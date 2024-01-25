@@ -90,8 +90,8 @@ export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] })
             let roomRef;
 
             if (selectedRoom) {
-                roomRef = ref(database, `rooms/${selectedRoom.id}`);
-                set(roomRef, {
+                    roomRef = ref(database, `rooms/${selectedRoom.id}`);
+                    set(roomRef, {
                     id: selectedRoom?.id || roomRef.key,
                     title,
                     description,

@@ -21,6 +21,7 @@ import { User } from "firebase/auth";
 import { Checkout } from "./Checkout";
 import { AllRooms } from "./AllRooms";
 import { Payment } from "./Payment";
+import { Profile } from "./Profile";
 
 
 
@@ -108,7 +109,7 @@ export function Routing() {
                         <Route path="/Admin" element={<Navigate to="/" />} />
                     )}
                     {user ? (
-                        <Route path="/profile" element={<Button>Hey</Button>} />
+                        <Route path="/profile" element={<Profile />} />
                     ) : (
                         <Route path="/profile" element={<Navigate to="/" />} />
                     )}
