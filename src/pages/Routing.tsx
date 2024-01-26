@@ -118,12 +118,12 @@ export function Routing() {
                     {user ? (
                         <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
                     ) : (
-                        <Route path="/room/checkout/:id" element={<Checkout rooms={rooms} />} />
+                        <Route path="/room/checkout/:id" element={<Navigate to="/" />} />
                     )}
                     {user ? (
                         <Route path="/room/payment/:id" element={<Payment />} />
                     ) : (
-                        <Route path="/room/payment/:id" element={<Payment />} />
+                        <Route path="/room/payment/:id" element={<Navigate to="/" />} />
                     )}
                     <Route path="rooms" element={<AllRooms rooms={rooms} />} />
                     <Route path="/about" element={<AboutUs />} />

@@ -51,7 +51,7 @@ export function SingleLocationContainer({ post }: { post: any }) {
             <Text fontSize={"xs"} color={colorMode === 'dark' ? "smalltext.base" : "smalltext.base"} mb="1" display={isLoading ? "none" : "block"} >
                 {`Location: ${location}`}
             </Text>
-            <Heading as="h3" size="md" mb="1" color={colorMode === 'dark' ? "text.darkmode" : "black"} display={isLoading ? "none" : "block"}>
+            <Heading maxW="270px" as="h3" size="md" mb="1" color={colorMode === 'dark' ? "text.darkmode" : "black"} display={isLoading ? "none" : "block"} >
                 {title}
             </Heading>
             <Text fontSize="sm" color={colorMode === 'dark' ? "text.darkmode" : "text.base"} mb="2" maxW="270px" display={isLoading ? "none" : "block"}>

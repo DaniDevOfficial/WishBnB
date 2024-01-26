@@ -90,8 +90,8 @@ export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] })
             let roomRef;
 
             if (selectedRoom) {
-                    roomRef = ref(database, `rooms/${selectedRoom.id}`);
-                    set(roomRef, {
+                roomRef = ref(database, `rooms/${selectedRoom.id}`);
+                set(roomRef, {
                     id: selectedRoom?.id || roomRef.key,
                     title,
                     description,
@@ -239,8 +239,15 @@ export function CreateNewRoom({ edit, rooms }: { edit: boolean, rooms: Room[] })
 
                 <FormControl mb="4" >
                     <FormLabel>Location</FormLabel>
-                    <Input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Enter location" />
+                    <Input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Enter location" isRequired/>
                 </FormControl>
+                <iframe
+                    width={"100%"}
+                    style={{
+                        aspectRatio: "16 / 9",
+                    }}
+                    src={`https://maps.google.com/maps?q=${location}&t=&z=13&ie=UTF8&&output=embed`}
+                />
 
                 <FormControl mb="4" >
                     <FormLabel>Additional Features</FormLabel>

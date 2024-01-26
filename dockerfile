@@ -1,23 +1,15 @@
-# Use an official Node.js image as a base image
-FROM node:14-alpine
+FROM node:21-alpine3.17 as build
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
 COPY . .
 
-# Build the Vite app
+RUN npm ci
+
 RUN npm run build
 
-# Expose the port that your app will run on
-EXPOSE 5173
+FROM nginx:1.21-alpine as prod
 
-# Command to run your application
-CMD ["npm", "run", "start"]
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80

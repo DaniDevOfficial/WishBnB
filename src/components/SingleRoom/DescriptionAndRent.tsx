@@ -63,19 +63,23 @@ export function DescriptionAndRent({ room }: { room: Room }) {
             <Heading my={4}>
                 You Would Stay Here:
             </Heading>
-            <LoadScript googleMapsApiKey={import.meta.env.VITE_MAPS_API_KEY}>
-                <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={14}>
-                    <Marker position={center} />
-                </GoogleMap>
-            </LoadScript>
+            <iframe
+                width={"100%"}
+                style={{
+                    aspectRatio: "16 / 9",
+                }}
+                src={`https://maps.google.com/maps?q=${room.location}&t=&z=13&ie=UTF8&&output=embed`}
+            />
             <Box mt={4}>
                 <Heading as="h3" size="md">
                     Available Dates:
                 </Heading>
                 <Calendar
+                    minDate={new Date()}
                     tileDisabled={({ date }) =>
                         room.unavailableDates &&
                         room.unavailableDates.length > 0 &&
+
                         room.unavailableDates.some(
                             (dateRange) =>
                                 new Date(date) >= new Date(dateRange.startDate) &&
