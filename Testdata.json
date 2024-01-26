@@ -1,0 +1,81 @@
+{
+    "rooms": [
+      {
+        "id": "1",
+        "title": "The Underwater Treehouse",
+        "location": "Aqua Arboretum, location1",
+        "description": "Dive into the world's first underwater treehouse...",
+        "longDescription": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum",
+        "price": "30",
+        "images": [
+          "https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+          "https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80"
+        ],
+        "comments": [
+          { "userId": "user1", "text": "Amazing experience!" },
+          { "userId": "user2", "text": "Beautiful location." }
+        ],
+        "unavailableDates": [
+          { "startDate": "2023-12-01", "endDate": "2023-12-10" },
+          { "startDate": "2023-12-11", "endDate": "2023-12-13" },
+          { "startDate": "2023-12-01", "endDate": "2023-12-10" }
+        ],
+        "additionalFeatures": [
+          { "name": "Scuba Diving Experience", "pricePerNight": 10 },
+          { "name": "Private Chef", "pricePerNight": 20 }
+        ],
+        "creator": "David Bischof"
+      },
+      {
+        "id": "2",
+        "title": "Another Underwater Room",
+        "location": "Aqua Arboretum, location2",
+        "description": "Discover the wonders of the deep in this cozy underwater room...",
+        "longDescription": "lorem ipsum lorem ipsum lorem ipsum...",
+        "price": "40",
+        "images": [
+          "https://images.unsplash.com/photo-1703696703525-2b4454dbd146?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8",
+          "https://images.unsplash.com/photo-1682695797221-8164ff1fafc9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        ],
+        "comments": [
+          { "userId": "user3", "text": "Fantastic view!" },
+          { "userId": "user4", "text": "Comfortable stay." }
+        ],
+        "unavailableDates": [
+          { "startDate": "2023-12-05", "endDate": "2023-12-15" },
+          { "startDate": "2023-12-20", "endDate": "2023-12-25" }
+        ],
+        "additionalFeatures": [
+          { "name": "Underwater Observatory Tour", "pricePerNight": 15 },
+          { "name": "Room Service", "pricePerNight": 25 }
+        ],
+        "creator": "Alice Smith"
+      },
+      {
+        "id": "3",
+        "title": "Ocean Suite",
+        "location": "Aqua Arboretum, location3",
+        "description": "Luxurious underwater suite with panoramic ocean views...",
+        "longDescription": "lorem ipsum lorem ipsum lorem ipsum...",
+        "price": "50",
+        "images": [
+          "https://plus.unsplash.com/premium_photo-1702910930523-897e2c217108?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8",
+          "https://images.unsplash.com/photo-1702165638628-a9ffecdef0a0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8"
+        ],
+        "comments": [
+          { "userId": "user5", "text": "Absolutely stunning!" },
+          { "userId": "user6", "text": "A dreamy escape." }
+        ],
+        "unavailableDates": [
+          { "startDate": "2023-12-08", "endDate": "2023-12-18" },
+          { "startDate": "2023-12-22", "endDate": "2023-12-28" }
+        ],
+        "additionalFeatures": [
+          { "name": "Private Submarine Tour", "pricePerNight": 30 },
+          { "name": "Champagne Service", "pricePerNight": 40 }
+        ],
+        "creator": "Michael Johnson"
+      }
+    ]
+  }
+  
