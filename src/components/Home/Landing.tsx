@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { GoChevronRight } from 'react-icons/go';
 import { MdHouse } from 'react-icons/md';
+import LogoImage from './LogoImage.png'
 import { useNavigate } from 'react-router-dom';
 const HeroSection = () => {
   const { colorMode } = useColorMode();
@@ -106,8 +107,7 @@ const HeroSection = () => {
           h="100%"
           minW={{ base: 'auto', md: '30rem' }}
           objectFit="cover"
-          src={`https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&q=80&
-            fm=jpg&crop=entropy&cs=tinysrgb&auto=format&fit=crop&w=334&q=80`}
+          src={LogoImage}
           rounded="md"
         
         fallback={<Skeleton w="" h="100px" minHeight={{ base: '25rem', md: '25rem' }} minW={{ base: 'auto', md: '30rem' }}/>}
